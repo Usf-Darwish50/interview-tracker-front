@@ -2,15 +2,21 @@
   <div class="navbar-container">
     <!-- Brand -->
     <div class="navbar-brand">
-      <img src="assets/images/ntg-logo.png" alt="NTG Clarity" class="logo" />
-      <span class="brand-text">NTG Clarity</span>
-      <div class="brand-divider"></div>
-      <h1 class="app-title">Interview Tracker</h1>
+      <a routerLink="/dashboard" class="navbar-brand">
+        <img src="assets/images/ntg-logo.png" alt="NTG Clarity" class="logo" />
+        <!-- <span class="brand-text">NTG Clarity</span> -->
+        <div class="brand-divider"></div>
+        <h1 class="app-title">Interview Tracker</h1>
+      </a>
     </div>
 
     <!-- Menu -->
     <div class="navbar-menu">
-      <a href="#" class="nav-item active">
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        class="nav-item active"
+      >
         <svg class="icon" viewBox="0 0 24 24">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
@@ -20,7 +26,7 @@
         <span>Dashboard</span>
       </a>
 
-      <a href="#" class="nav-item">
+      <a routerLink="/candidates" routerLinkActive="active" class="nav-item">
         <svg class="icon" viewBox="0 0 24 24">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
@@ -28,7 +34,7 @@
         <span>Candidates</span>
       </a>
 
-      <a href="#" class="nav-item">
+      <a routerLink="/processes" routerLinkActive="active" class="nav-item">
         <svg class="icon" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
           <path d="M2 17l10 5 10-5"></path>
@@ -40,14 +46,14 @@
 
     <!-- Actions -->
     <div class="navbar-actions">
-      <button class="search-btn" aria-label="Search">
+      <!-- <button class="search-btn" aria-label="Search">
         <svg class="icon" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.35-4.35"></path>
         </svg>
-      </button>
+      </button> -->
 
-      <div class="user-menu">
+      <div class="user-menu" (click)="toggleUserMenu()">
         <button class="user-btn">
           <div class="user-avatar">YD</div>
           <span class="user-name">Youssef Darwish</span>
@@ -55,6 +61,19 @@
             <polyline points="6,9 12,15 18,9"></polyline>
           </svg>
         </button>
+
+        @if (isUserMenuOpen) {
+        <div class="dropdown-menu">
+          <a class="dropdown-item">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Logout</span>
+          </a>
+        </div>
+        }
       </div>
     </div>
   </div>
