@@ -26,7 +26,7 @@
 
 .main-content {
   flex: 1;
-  margin-top: 64px; /* Space for fixed top navbar */
+  margin-top: 25px; /* Space for fixed top navbar */
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 64px);

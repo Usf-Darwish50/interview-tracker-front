@@ -1,0 +1,78 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">Create Candidate Profile</h2>
+    </div>
+
+    <form [formGroup]="candidateForm" class="candidate-form">
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              placeholder="Candidate's full name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              placeholder="+01200000000"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="candidate@example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="position">Position</label>
+            <input
+              id="position"
+              type="text"
+              formControlName="position"
+              placeholder="Software Engineer"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input
+              id="address"
+              type="text"
+              formControlName="address"
+              placeholder="Street address, City"
+            />
+          </div>
+          <div class="form-group">
+            <label for="cv">CV URL</label>
+            <input
+              id="cv"
+              type="url"
+              formControlName="resumeUrl"
+              placeholder="drive.google.com/file/cv.pdf/..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Create Candidate</button>
+      </div>
+    </form>
+  </div>
+</div>

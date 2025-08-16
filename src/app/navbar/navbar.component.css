@@ -80,18 +80,17 @@
   transition: all 0.2s ease;
 }
 
-.nav-item:hover {
-  background: #f3f4f6;
-  color: #374151;
-}
-
 .nav-item.active {
-  background: #2563eb; /* matches avatar */
+  background: #208e8b; /* Rich teal from Option 2 */
   color: white;
 }
 
 .nav-item.active:hover {
-  background: #1d4ed8;
+  background: #197a77; /* Slightly darker shade on hover */
+}
+
+.nav-item.active:hover {
+  background: #208e8b;
 }
 
 .navbar-actions {
@@ -134,7 +133,7 @@
 .user-avatar {
   width: 32px;
   height: 32px;
-  background: #2563eb; /* matches active item */
+  background: #208e8b;
   border-radius: 50%;
   display: flex;
   align-items: center;
