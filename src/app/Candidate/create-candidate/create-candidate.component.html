@@ -4,7 +4,11 @@
       <h2 class="form-title">Create Candidate Profile</h2>
     </div>
 
-    <form [formGroup]="candidateForm" class="candidate-form">
+    <form
+      [formGroup]="candidateForm"
+      class="candidate-form"
+      (ngSubmit)="onSubmit()"
+    >
       <div class="form-section">
         <div class="form-row">
           <div class="form-group">
