@@ -1,0 +1,177 @@
+.profile-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Candidate Card */
+.candidate-card {
+  margin: 32px;
+  background: white;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.candidate-name {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+.candidate-position {
+  font-size: 16px;
+  color: #718096;
+  margin: 0 0 24px 0;
+}
+
+.contact-info {
+  display: flex;
+  gap: 48px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-item label {
+  font-size: 18px;
+  color: #718096;
+  font-weight: 700;
+}
+
+.contact-item span {
+  font-size: 18px;
+  color: #000000;
+  font-weight: 500;
+}
+
+.candidate-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Interview Progress */
+.interview-progress {
+  margin: 0 32px 32px 32px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 24px;
+}
+
+.interview-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.interview-stage {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.interview-stage.rejected {
+  border-left: 4px solid #e53e3e;
+}
+
+.interview-stage.pending {
+  border-left: 4px solid #e2e8f0;
+}
+
+.stage-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7fafc;
+  border-radius: 8px;
+}
+
+.stage-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stage-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.stage-status {
+  color: #e53e3e;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.stage-actions {
+  margin-left: auto;
+}
+
+.feedback-link {
+  color: #3182ce;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.feedback-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .main-content {
+    margin-left: 60px;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .candidate-info {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .candidate-card,
+  .interview-progress {
+    margin: 16px;
+  }
+}

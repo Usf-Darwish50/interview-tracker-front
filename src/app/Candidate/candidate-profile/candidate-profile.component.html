@@ -1,0 +1,73 @@
+<div class="main-content">
+  @if (candidate) {
+  <div class="candidate-card">
+    <div class="candidate-info">
+      <div class="candidate-details">
+        <h1 class="candidate-name">{{ candidate.fullName }}</h1>
+        <p class="candidate-position">{{ candidate.position }}</p>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <label>Email</label>
+            <a href="mailto:{{ candidate.email }}">{{ candidate.email }}</a>
+          </div>
+          <div class="contact-item">
+            <label>Phone</label>
+            <a href="tel:{{ candidate.phone }}">+ {{ candidate.phone }}</a>
+          </div>
+          <div class="contact-item">
+            <label>Address</label>
+            <span>{{ candidate.address }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="candidate-actions">
+        <button class="btn-primary small" (click)="viewCV()">View CV</button>
+      </div>
+    </div>
+  </div>
+  }
+
+  <div class="interview-progress">
+    <h2 class="section-title">Interview Progress</h2>
+
+    <div class="interview-stages">
+      @for (stage of interviewStages; track stage.id) {
+      <div
+        class="interview-stage"
+        [ngClass]="{
+          rejected: stage.status === 'REJECTED',
+          pending: stage.status === 'PENDING',
+          accepted: stage.status === 'ACCEPTED'
+        }"
+      >
+        <div class="stage-icon">
+          @if (stage.icon === 'phone') {
+          <span>📞</span>
+          } @else if (stage.icon === 'document') {
+          <span>📄</span>
+          } @else if (stage.icon === 'monitor') {
+          <span>💻</span>
+          }
+        </div>
+
+        <div class="stage-content">
+          <span class="stage-name">{{ stage.name }}</span>
+          @if (stage.status === 'REJECTED') {
+          <span class="stage-status"> Rejected </span>
+          }
+        </div>
+
+        @if (stage.feedback) {
+        <div class="stage-actions">
+          <button class="btn-primary small" (click)="viewFeedback(stage.id)">
+            View Feedback
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>

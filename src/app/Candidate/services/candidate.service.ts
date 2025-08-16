@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Candidate } from '../models/candidate.model';
+import { Candidate, newCandidate } from '../models/candidate.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,7 +17,35 @@ export class CandidateService {
    * @param candidateData The data for the new candidate.
    * @returns An Observable of the API response.
    */
-  createCandidate(candidateData: Candidate): Observable<any> {
+  createCandidate(candidateData: newCandidate): Observable<any> {
     return this.http.post(this.apiUrl, candidateData);
+  }
+
+  /**
+   * Sends a GET request to retrieve all candidates.
+   * @returns An Observable of an array of Candidate objects.
+   */
+  getCandidates(): Observable<Candidate[]> {
+    return this.http.get<Candidate[]>(this.apiUrl);
+  }
+
+  /**
+   * Sends a DELETE request to remove a candidate by ID.
+   * @param candidateId The ID of the candidate to delete.
+   * @returns An Observable of the API response.
+   */
+  deleteCandidate(candidateId: number): Observable<any> {
+    const url = `${this.apiUrl}/${candidateId}`;
+    return this.http.delete(url);
+  }
+
+  /**
+   * Sends a DELETE request to remove a candidate by ID.
+   * @param candidateId The ID of the candidate to delete.
+   * @returns An Observable of the API response.
+   */
+  findCandidateById(candidateId: number): Observable<any> {
+    const url = `${this.apiUrl}/${candidateId}`;
+    return this.http.get(url);
   }
 }

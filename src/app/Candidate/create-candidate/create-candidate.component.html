@@ -1,3 +1,4 @@
+<!-- create-candidate.component.html -->
 <div class="form-container">
   <div class="form-card">
     <div class="form-header">
@@ -11,6 +12,7 @@
     >
       <div class="form-section">
         <div class="form-row">
+          <!-- Full Name -->
           <div class="form-group">
             <label for="fullName">Full Name</label>
             <input
@@ -18,8 +20,25 @@
               type="text"
               formControlName="fullName"
               placeholder="Candidate's full name"
+              [class.is-invalid]="
+                candidateForm.get('fullName')?.invalid &&
+                candidateForm.get('fullName')?.touched
+              "
             />
+            <!-- Conditional display of validation errors for fullName -->
+            @if (candidateForm.get('fullName')?.invalid &&
+            candidateForm.get('fullName')?.touched) {
+            <div class="validation-error">
+              @if (candidateForm.get('fullName')?.hasError('required')) {
+              <p>Full Name is required.</p>
+              } @if (candidateForm.get('fullName')?.hasError('pattern')) {
+              <p>Full Name can only contain letters and spaces.</p>
+              }
+            </div>
+            }
           </div>
+
+          <!-- Phone -->
           <div class="form-group">
             <label for="phone">Phone</label>
             <input
@@ -27,11 +46,27 @@
               type="tel"
               formControlName="phone"
               placeholder="+01200000000"
+              [class.is-invalid]="
+                candidateForm.get('phone')?.invalid &&
+                candidateForm.get('phone')?.touched
+              "
             />
+            <!-- Conditional display of validation errors for phone -->
+            @if (candidateForm.get('phone')?.invalid &&
+            candidateForm.get('phone')?.touched) {
+            <div class="validation-error">
+              @if (candidateForm.get('phone')?.hasError('required')) {
+              <p>Phone number is required.</p>
+              } @if (candidateForm.get('phone')?.hasError('pattern')) {
+              <p>Please enter a valid phone number.</p>
+              }
+            </div>
+            }
           </div>
         </div>
 
         <div class="form-row">
+          <!-- Email -->
           <div class="form-group">
             <label for="email">Email</label>
             <input
@@ -39,8 +74,25 @@
               type="email"
               formControlName="email"
               placeholder="candidate@example.com"
+              [class.is-invalid]="
+                candidateForm.get('email')?.invalid &&
+                candidateForm.get('email')?.touched
+              "
             />
+            <!-- Conditional display of validation errors for email -->
+            @if (candidateForm.get('email')?.invalid &&
+            candidateForm.get('email')?.touched) {
+            <div class="validation-error">
+              @if (candidateForm.get('email')?.hasError('required')) {
+              <p>Email is required.</p>
+              } @if (candidateForm.get('email')?.hasError('email')) {
+              <p>Please enter a valid email address.</p>
+              }
+            </div>
+            }
           </div>
+
+          <!-- Position -->
           <div class="form-group">
             <label for="position">Position</label>
             <input
@@ -48,11 +100,27 @@
               type="text"
               formControlName="position"
               placeholder="Software Engineer"
+              [class.is-invalid]="
+                candidateForm.get('position')?.invalid &&
+                candidateForm.get('position')?.touched
+              "
             />
+            <!-- Conditional display of validation errors for position -->
+            @if (candidateForm.get('position')?.invalid &&
+            candidateForm.get('position')?.touched) {
+            <div class="validation-error">
+              @if (candidateForm.get('position')?.hasError('required')) {
+              <p>Position is required.</p>
+              } @if (candidateForm.get('position')?.hasError('minlength')) {
+              <p>Position must be at least 3 characters long.</p>
+              }
+            </div>
+            }
           </div>
         </div>
 
         <div class="form-row">
+          <!-- Address -->
           <div class="form-group">
             <label for="address">Address</label>
             <input
@@ -60,8 +128,25 @@
               type="text"
               formControlName="address"
               placeholder="Street address, City"
+              [class.is-invalid]="
+                candidateForm.get('address')?.invalid &&
+                candidateForm.get('address')?.touched
+              "
             />
+            <!-- Conditional display of validation errors for address -->
+            @if (candidateForm.get('address')?.invalid &&
+            candidateForm.get('address')?.touched) {
+            <div class="validation-error">
+              @if (candidateForm.get('address')?.hasError('required')) {
+              <p>Address is required.</p>
+              } @if (candidateForm.get('address')?.hasError('minlength')) {
+              <p>Address must be at least 5 characters long.</p>
+              }
+            </div>
+            }
           </div>
+
+          <!-- CV URL -->
           <div class="form-group">
             <label for="cv">CV URL</label>
             <input
@@ -69,14 +154,40 @@
               type="url"
               formControlName="resumeUrl"
               placeholder="drive.google.com/file/cv.pdf/..."
+              [class.is-invalid]="
+                candidateForm.get('resumeUrl')?.invalid &&
+                candidateForm.get('resumeUrl')?.touched
+              "
             />
+            <!-- Conditional display of validation errors for resumeUrl -->
+            @if (candidateForm.get('resumeUrl')?.invalid &&
+            candidateForm.get('resumeUrl')?.touched) {
+            <div class="validation-error">
+              @if (candidateForm.get('resumeUrl')?.hasError('required')) {
+              <p>CV URL is required.</p>
+              } @if (candidateForm.get('resumeUrl')?.hasError('pattern')) {
+              <p>Please enter a valid URL.</p>
+              }
+            </div>
+            }
           </div>
         </div>
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn-primary">Create Candidate</button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="candidateForm.invalid"
+        >
+          Create Candidate
+        </button>
       </div>
+      @if (notificationMessage) {
+      <div class="notification-dialog">
+        {{ notificationMessage }}
+      </div>
+      }
     </form>
   </div>
 </div>

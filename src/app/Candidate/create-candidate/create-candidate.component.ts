@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CandidateService } from '../services/candidate.service';
-import { Candidate } from '../models/candidate.model';
+import { newCandidate } from '../models/candidate.model';
 import { catchError, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 @Component({
@@ -19,6 +19,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CreateCandidateComponent {
   candidateForm!: FormGroup;
+  notificationMessage: string = '';
+
+  phonePattern = /^[+]{0,1}[0-9\s-()]{7,20}$/;
+  urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
   constructor(
     private formBuilder: FormBuilder,
     private candidateService: CandidateService
@@ -26,26 +30,28 @@ export class CreateCandidateComponent {
 
   ngOnInit(): void {
     this.candidateForm = this.formBuilder.group({
-      // Add validators to ensure fields are not empty
-      fullName: ['', Validators.required],
-      phone: ['', Validators.required],
-      address: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]], // Added email validator
-      resumeUrl: ['', Validators.required],
-      position: ['', Validators.required],
+      fullName: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)],
+      ], // Added pattern validator
+      phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]], // Corrected
+      address: ['', [Validators.required, Validators.minLength(5)]], // Added minLength validator
+      email: ['', [Validators.required, Validators.email]],
+      resumeUrl: [
+        '',
+        [Validators.required, Validators.pattern(this.urlPattern)],
+      ], // Corrected
+      position: ['', [Validators.required, Validators.minLength(3)]], // Added minLength validator
     });
   }
   onSubmit(): void {
-    console.log('Submitting form...'); // <-- Log to check if the function is called
-
     if (this.candidateForm.valid) {
-      console.log('Form is valid. Submitting data:', this.candidateForm.value); // <-- Log the form data
+      console.log('Form is valid. Submitting data:', this.candidateForm.value);
       this.candidateService
-        .createCandidate(this.candidateForm.value as Candidate)
+        .createCandidate(this.candidateForm.value as newCandidate)
         .pipe(
           catchError((error) => {
             console.error('There was an error creating the candidate:', error);
-            // Re-throw the error so the subscribe's error handler can catch it
             return throwError(
               () => new Error('Something went wrong. Please try again later.')
             );
@@ -54,13 +60,12 @@ export class CreateCandidateComponent {
         .subscribe({
           next: (response) => {
             console.log('Candidate created successfully!', response);
-            // Replace alert with console.log for better debugging experience
-            console.log('Candidate created successfully!');
-            this.candidateForm.reset(); // Clear the form on success
+            this.showNotification('Candidate created successfully!'); // Call on success
+
+            this.candidateForm.reset();
           },
           error: (err) => {
             console.error('API call failed:', err);
-            // Replace alert with console.log for better debugging experience
             console.log(
               'Failed to create candidate. Please check the form and try again.'
             );
@@ -70,5 +75,12 @@ export class CreateCandidateComponent {
       console.log('Form is invalid.');
       console.log('Please fill out all required fields.');
     }
+  }
+
+  showNotification(message: string): void {
+    this.notificationMessage = message;
+    setTimeout(() => {
+      this.notificationMessage = '';
+    }, 3000);
   }
 }

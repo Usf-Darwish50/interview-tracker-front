@@ -5,8 +5,3 @@
   gap: 16px; /* Adds space between the buttons */
   margin-bottom: 20px; /* Adds a bit of space below the buttons */
 }
-.btn-primary.small {
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 8px;
-}
