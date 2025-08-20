@@ -37,8 +37,8 @@
 }
 
 .logo {
-  width: 50px; /* smaller for better vertical alignment */
-  height: 50px;
+  width: 80px; /* smaller for better vertical alignment */
+  height: 100%;
   object-fit: contain; /* keeps proportions */
 }
 
