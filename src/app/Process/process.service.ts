@@ -29,4 +29,14 @@ export class ProcessService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get(url);
   }
+
+  /**
+   * Fetches a single process by its ID.
+   * @param id The ID of the process to fetch.
+   * @returns An Observable of the process data.
+   */
+  getAllProcesses(): Observable<any[]> {
+    const url = `${this.apiUrl}`;
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }

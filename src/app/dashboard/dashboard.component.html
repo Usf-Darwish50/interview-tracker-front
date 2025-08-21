@@ -28,7 +28,7 @@
               cy="100"
               r="80"
               fill="none"
-              stroke="#10b981"
+              stroke="#209865"
               stroke-width="20"
               stroke-dasharray="226 504"
               stroke-dashoffset="0"
@@ -39,7 +39,7 @@
               cy="100"
               r="80"
               fill="none"
-              stroke="#3b82f6"
+              stroke="#2B6CB0"
               stroke-width="20"
               stroke-dasharray="176 504"
               stroke-dashoffset="-226"
@@ -50,7 +50,7 @@
               cy="100"
               r="80"
               fill="none"
-              stroke="#ef4444"
+              stroke="#E53E3E"
               stroke-width="20"
               stroke-dasharray="101 504"
               stroke-dashoffset="-402"
@@ -68,8 +68,8 @@
             <span>In Progress ({{ processDistribution.inProgress }}%)</span>
           </div>
           <div class="legend-item">
-            <div class="legend-color cancelled"></div>
-            <span>Cancelled ({{ processDistribution.cancelled }}%)</span>
+            <div class="legend-color not-started"></div>
+            <span>Not Stared ({{ processDistribution.cancelled }}%)</span>
           </div>
         </div>
       </div>
@@ -94,24 +94,33 @@
     </div>
 
     <div class="processes-grid">
-      @for (process of activeProcesses; track process.id) {
-      <div class="process-card" [class]="process.statusClass">
-        <div class="card-header">
-          <h3 class="process-title">{{ process.title }}</h3>
-          <span class="candidate-count"
-            >{{ process.candidateCount }} Candidates</span
-          >
-        </div>
+      @if (activeProcesses$ | async; as processes) { @for (process of processes;
+      track process.processId) {
+      <div class="process-card">
+        <div class="card-header {{ process.status }}"></div>
         <div class="card-body">
-          <span class="process-status" [class]="process.statusClass">{{
-            process.status
-          }}</span>
-        </div>
-        <div class="card-footer">
-          <button class="view-process-btn">View Process</button>
+          <h3 class="process-title">{{ process.title }}</h3>
+          <span class="candidate-count"> 40 Candidates </span>
+          <!-- <div class="process-status">
+            {{
+              process.status === "NOT_STARTED"
+                ? "Not Started"
+                : process.status === "IN_PROGRESS"
+                ? "In Progress"
+                : process.status === "COMPLETED"
+                ? "Completed"
+                : "N/A"
+            }}
+          </div> -->
+          <button
+            class="view-process-btn"
+            [routerLink]="['/process-profile', process.processId]"
+          >
+            View Process
+          </button>
         </div>
       </div>
-      }
+      } }
     </div>
   </div>
 </div>

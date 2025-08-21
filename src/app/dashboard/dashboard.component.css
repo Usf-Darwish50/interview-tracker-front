@@ -8,6 +8,7 @@
 
 /* Added comprehensive dashboard styling */
 .dashboard-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -23,7 +24,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .section-header {
@@ -107,113 +108,105 @@
   border-radius: 2px;
 }
 
+/* Updated legend colors */
 .legend-color.completed {
-  background: #10b981;
+  background: #10b981; /* Green */
 }
 
 .legend-color.in-progress {
-  background: #3b82f6;
+  background: #347ac4; /* Yellow */
 }
 
-.legend-color.cancelled {
-  background: #ef4444;
+.legend-color.not-started {
+  background: #ef4444; /* Red */
 }
 
 /* Process Cards Grid */
 .processes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
   gap: 20px;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  padding-bottom: 8px; /* Space for scrollbar */
 }
 
+/*
+* Updated card design to match the provided image.
+* This replaces the previous .process-card, .card-header, and .card-footer styles.
+*/
 .process-card {
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-  border-left: 4px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* Ensures the border-radius applies correctly to the header */
+  min-width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.process-card:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
+/* Updated card header to have a background color based on status */
+.process-card .card-header {
+  padding: 3px;
 }
 
-.process-card.in-progress {
-  border-left-color: #3b82f6;
+/* Status-based header colors */
+.process-card .card-header.IN_PROGRESS {
+  background-color: #347ac4; /* Blue for In Progress */
 }
 
-.process-card.completed {
-  border-left-color: #10b981;
+.process-card .card-header.NOT_STARTED {
+  background-color: #ef4444; /* Red for Not Started */
 }
 
-.process-card.cancelled {
-  border-left-color: #ef4444;
+.process-card .card-header.COMPLETED {
+  background-color: #10b981; /* Green for Completed */
 }
 
-.card-header {
-  margin-bottom: 12px;
-}
-
-.process-title {
-  font-size: 16px;
+/* Updated header typography */
+.process-card .process-title {
+  font-size: 14px;
   font-weight: 600;
-  color: #111827;
   margin: 0 0 4px 0;
+  color: #000000; /* Corrected to white */
 }
 
-.candidate-count {
-  font-size: 13px;
-  color: #6b7280;
+.process-card .candidate-count {
+  font-size: 14px;
+  color: #000000; /* Corrected to lighter white */
 }
 
-.card-body {
-  margin-bottom: 16px;
+/* New card body layout */
+.process-card .card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-grow: 1; /* Allows the body to fill remaining space */
 }
 
-.process-status {
+/* New status text style */
+.process-card .process-status {
   font-size: 14px;
   font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 6px;
-  display: inline-block;
+  color: #6b7280; /* Gray color for the status text */
 }
 
-.process-status.in-progress {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.process-status.completed {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.process-status.cancelled {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-.card-footer {
-  border-top: 1px solid #f3f4f6;
-  padding-top: 16px;
-}
-
-.view-process-btn {
+/* New button style inside the card body */
+.process-card .view-process-btn {
   background: none;
-  border: 1px solid #e5e7eb;
+  border: 2px solid #d1d5db;
   border-radius: 6px;
   padding: 8px 16px;
   font-size: 14px;
-  color: #6b7280;
+  color: #000000;
   cursor: pointer;
   transition: all 0.2s ease;
   width: 100%;
 }
 
-.view-process-btn:hover {
+.process-card .view-process-btn:hover {
   background: #f9fafb;
   border-color: #d1d5db;
   color: #374151;
@@ -227,7 +220,7 @@
   }
 
   .processes-grid {
-    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .section-header {
