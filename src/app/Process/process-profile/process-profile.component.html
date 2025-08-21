@@ -1,1 +1,97 @@
-<p>process-profile works!</p>
+<div class="main-content">
+  @if (process$ | async; as process) {
+  <div class="process-card">
+    <div class="process-info">
+      <div class="process-details">
+        <h1 class="process-name">{{ process.title }}</h1>
+        <p class="process-status">{{ process.status }}</p>
+
+        <div class="meta-info">
+          <div class="meta-item">
+            <label>Created By</label>
+            <span>{{ process.createdBy }}</span>
+          </div>
+          <div class="meta-item">
+            <label>Created On</label>
+            <span>{{ process.createdDate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-actions">
+        <button class="btn-primary small" (click)="addStage()">
+          Add Stage
+        </button>
+        <button class="btn-primary small" (click)="assignInterviewer()">
+          Assign Interviewer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="interview-progress">
+    <h2 class="section-title">Interview Stages</h2>
+
+    <div class="interview-stages">
+      @for (stage of processStages; track stage.id) {
+      <div
+        class="interview-stage"
+        [ngClass]="{
+          completed: stage.status === 'COMPLETED',
+          pending: stage.status === 'PENDING',
+          in_progress: stage.status === 'IN_PROGRESS'
+        }"
+      >
+        <div class="stage-icon">
+          @if (stage.icon === 'phone') {
+          <span>📞</span>
+          } @else if (stage.icon === 'document') {
+          <span>📄</span>
+          } @else if (stage.icon === 'monitor') {
+          <span>💻</span>
+          }
+        </div>
+
+        <div class="stage-content">
+          <span class="stage-name">{{ stage.name }}</span>
+          @if (stage.status === 'COMPLETED') {
+          <span class="stage-status-message">{{
+            stageStatusMessage[stage.id]
+          }}</span>
+          }
+        </div>
+
+        @if (stage.status === 'IN_PROGRESS') {
+        <div class="stage-actions">
+          <div class="tooltip-container">
+            <span class="next-stage-arrow" (click)="moveToNextStage(stage.id)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-right"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </span>
+            <span class="tooltip-text">Move to next stage</span>
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+  } @else {
+  <div class="loading-container">
+    <p>Loading process details...</p>
+  </div>
+  }
+</div>

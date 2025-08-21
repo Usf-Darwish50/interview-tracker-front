@@ -1,0 +1,225 @@
+/* General Layout */
+.main-content {
+  padding: 6px 32px 32px 32px;
+}
+
+/* Process Card */
+.process-card {
+  margin: 32px;
+  background: white;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.process-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.process-name {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+.process-status {
+  font-size: 16px;
+  color: #718096;
+  margin: 0 0 24px 0;
+}
+
+.meta-info {
+  display: flex;
+  gap: 48px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-item label {
+  font-size: 18px;
+  color: #718096;
+  font-weight: 700;
+}
+
+.meta-item span {
+  font-size: 18px;
+  color: #000000;
+  font-weight: 500;
+}
+
+.process-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Interview Stages Section */
+.interview-progress {
+  margin: 0 32px 32px 32px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 24px;
+}
+
+.interview-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.interview-stage {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s;
+  border-left: 4px solid transparent;
+}
+
+.interview-stage.rejected {
+  border-left-color: #e53e3e;
+}
+
+.interview-stage.pending {
+  border-left-color: #e2e8f0;
+}
+
+.interview-stage.completed {
+  border-left-color: #28a745;
+}
+
+.interview-stage.in_progress {
+  border-left-color: #ffc107;
+}
+
+.stage-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7fafc;
+  border-radius: 8px;
+}
+
+.stage-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stage-name {
+  font-size: 16px;
+  font-weight: 550;
+  color: #000000;
+}
+
+.stage-status-message {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #28a745;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+.btn-primary.small {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #208e8b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary.small:hover {
+  background-color: #197a77;
+}
+
+.stage-actions {
+  margin-left: auto;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.next-stage-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #208e8b;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.next-stage-arrow:hover {
+  color: #197a77;
+  transform: translateX(4px);
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .candidate-info {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .contact-info {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .candidate-card,
+  .interview-progress {
+    margin: 16px;
+  }
+}
