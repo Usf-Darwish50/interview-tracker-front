@@ -2,21 +2,27 @@
   <button class="btn-primary small" routerLink="/add-candidate">
     Add Candidate
   </button>
-  <button class="btn-primary small" routerLink="/add-process">
+  <button class="btn-primary small" (click)="onAddProcessClick()">
     Add Process
   </button>
 </div>
 
-<!-- Added dashboard content sections -->
+@if (showAddProcessDialog) {
+<app-add-process
+  [managerId]="managerId"
+  (closeDialog)="showAddProcessDialog = false"
+  (processCreated)="onProcessCreated()"
+>
+</app-add-process>
+}
+
 <div class="dashboard-content">
-  <!-- Process Distribution Chart Section -->
   <div class="dashboard-section">
     <div class="section-card">
       <h2 class="section-title">Process Distribution</h2>
       <div class="chart-container">
         <div class="donut-chart">
           <svg viewBox="0 0 200 200" class="chart-svg">
-            <!-- Completed segment (45%) - Green -->
             <circle
               cx="100"
               cy="100"
@@ -28,7 +34,6 @@
               stroke-dashoffset="0"
               transform="rotate(-90 100 100)"
             />
-            <!-- In Progress segment (35%) - Blue -->
             <circle
               cx="100"
               cy="100"
@@ -40,7 +45,6 @@
               stroke-dashoffset="-226"
               transform="rotate(-90 100 100)"
             />
-            <!-- Cancelled segment (20%) - Red -->
             <circle
               cx="100"
               cy="100"
@@ -72,7 +76,6 @@
     </div>
   </div>
 
-  <!-- Active Processes Section -->
   <div class="dashboard-section">
     <div class="section-header">
       <h2 class="section-title">Active Processes</h2>

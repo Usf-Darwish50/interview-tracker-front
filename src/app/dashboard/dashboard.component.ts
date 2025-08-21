@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AddProcessComponent } from '../Process/add-process/add-process.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, AddProcessComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -45,4 +46,18 @@ export class DashboardComponent {
       statusClass: 'cancelled',
     },
   ];
+
+  showAddProcessDialog = false;
+  //Default manager id for now
+  managerId = 3;
+
+  onAddProcessClick() {
+    this.showAddProcessDialog = true;
+  }
+
+  onProcessCreated() {
+    // Logic to refresh the process list, if needed.
+    console.log('Process created. Refreshing dashboard data...');
+    // You might want to call a service method to re-fetch the list of processes here.
+  }
 }

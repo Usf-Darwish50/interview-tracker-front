@@ -1,0 +1,176 @@
+/* src/app/add-process/add-process.component.css */
+
+/* Dialog Backdrop */
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Dialog Content */
+.dialog-content {
+  background-color: #f3f4f6;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+  padding: 24px;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative; /* Add relative positioning for the close button */
+}
+
+/* Header - Updated with flexbox */
+.dialog-header {
+  border-bottom: 2px solid #acadb1;
+  padding-bottom: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+  display: flex; /* Use flexbox to align title and close button */
+  justify-content: space-between; /* Push items to opposite ends */
+  align-items: center;
+}
+
+.dialog-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* New close button styles */
+.close-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #6b7280; /* Gray color for the icon */
+  transition: color 0.2s ease;
+  position: absolute; /* Position it absolutely within the dialog-content */
+  top: 16px;
+  right: 16px;
+}
+
+.close-btn:hover {
+  color: #111827; /* Darker color on hover */
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+/* Input Field */
+.form-group input {
+  width: 90%;
+  padding: 12px 10px;
+  border: 1px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #111827;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input::placeholder {
+  color: #737a88;
+}
+
+.form-group input:focus {
+  border-color: #9ca3af;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-group input:hover:not(:focus) {
+  border-color: #9ca3af;
+}
+
+/* Error message */
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: -6px;
+  margin-bottom: 12px;
+}
+
+/* Dialog Actions (Buttons) */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end; /* Align the single button to the right */
+  margin-top: 24px;
+}
+
+.btn-primary:disabled {
+  background-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+/* New styles for the success message */
+.success-message-container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-message {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #10b981; /* A nice green for success */
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.success-icon {
+  color: #10b981;
+  width: 48px;
+  height: 48px;
+}
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .dialog-content {
+    padding: 20px;
+  }
+  .dialog-header h3 {
+    font-size: 22px;
+  }
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+  .btn-primary {
+    width: 100%;
+  }
+}
