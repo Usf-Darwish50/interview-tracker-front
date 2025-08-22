@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   activeProcesses$!: Observable<HiringProcessProfile[]>;
 
   showAddProcessDialog = false;
-  managerId = 3;
+  managerId = 1;
 
   constructor(private processService: ProcessService) {}
 

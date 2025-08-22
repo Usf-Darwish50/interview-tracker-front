@@ -39,4 +39,14 @@ export class ProcessService {
     const url = `${this.apiUrl}`;
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  /**
+   * Ends a process by setting its status to 'COMPLETED'.
+   * @param id The ID of the process to end.
+   * @returns An Observable of the API response.
+   */
+  endProcess(id: number): Observable<any> {
+    const url = `${this.apiUrl}/end/${id}`;
+    return this.http.put(url, {}); // PUT requests often require a body, even if it's empty
+  }
 }

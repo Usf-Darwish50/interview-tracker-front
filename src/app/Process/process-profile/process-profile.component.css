@@ -19,16 +19,17 @@
 }
 
 .process-name {
-  font-size: 28px;
-  font-weight: 600;
-  color: #2d3748;
+  font-size: 32px; /* Slightly reduced for better balance */
+  font-weight: 600; /* Made bolder for emphasis */
+  color: #000000;
   margin: 0 0 8px 0;
 }
 
 .process-status {
-  font-size: 16px;
+  font-size: 18px; /* Slightly smaller to distinguish from other text */
   color: #718096;
   margin: 0 0 24px 0;
+  font-weight: 500;
 }
 
 .meta-info {
@@ -43,14 +44,14 @@
 }
 
 .meta-item label {
-  font-size: 18px;
-  color: #718096;
+  font-size: 18px; /* A bit smaller for a cleaner look */
+  color: #000000;
   font-weight: 700;
 }
 
 .meta-item span {
-  font-size: 18px;
-  color: #000000;
+  font-size: 16px; /* Matching the label size */
+  color: #718096;
   font-weight: 500;
 }
 
@@ -65,7 +66,7 @@
 }
 
 .section-title {
-  font-size: 24px;
+  font-size: 22px; /* A bit smaller to feel less imposing */
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 24px;
@@ -94,7 +95,7 @@
 }
 
 .interview-stage.pending {
-  border-left-color: #e2e8f0;
+  border-left-color: darkgrey;
 }
 
 .interview-stage.completed {
@@ -102,7 +103,7 @@
 }
 
 .interview-stage.in_progress {
-  border-left-color: #ffc107;
+  border-left-color: #347ac4;
 }
 
 .stage-icon {
@@ -124,17 +125,35 @@
 }
 
 .stage-name {
-  font-size: 16px;
-  font-weight: 550;
+  font-size: 24px;
+  font-weight: 500;
   color: #000000;
 }
 
 .stage-status-message {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #28a745;
+  font-size: 18px;
+  font-weight: 700;
   text-transform: uppercase;
   margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  text-align: center;
+}
+
+/* Specific colors for each status */
+.interview-stage.completed .stage-status-message {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.interview-stage.in_progress .stage-status-message {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.interview-stage.pending .stage-status-message {
+  background-color: #e5e7eb;
+  color: #374151;
 }
 
 .btn-primary.small {
@@ -206,6 +225,42 @@
 .tooltip-container:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+/* Styles for the "Process Ended" message */
+.process-ended-message {
+  margin-top: 24px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid #28a745;
+  font-size: 24px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.process-ended-message::before {
+  content: "✓";
+  font-size: 24px;
+  color: #28a745;
+  margin-right: 8px;
+}
+
+/* Styling for disabled buttons */
+.btn-primary.small:disabled {
+  background-color: #e2e8f0;
+  color: #a0aec0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Optional: To make sure the hover effect is also disabled */
+.btn-primary.small:disabled:hover {
+  background-color: #e2e8f0;
 }
 
 /* Responsive Design */

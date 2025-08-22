@@ -19,11 +19,26 @@
       </div>
 
       <div class="process-actions">
-        <button class="btn-primary small" (click)="addStage()">
+        <button
+          class="btn-primary small"
+          (click)="addStage()"
+          [disabled]="process.status === 'COMPLETED'"
+        >
           Add Stage
         </button>
-        <button class="btn-primary small" (click)="assignInterviewer()">
+        <button
+          class="btn-primary small"
+          (click)="assignInterviewer()"
+          [disabled]="process.status === 'COMPLETED'"
+        >
           Assign Interviewer
+        </button>
+        <button
+          class="btn-primary small"
+          (click)="endProcess()"
+          [disabled]="process.status === 'COMPLETED'"
+        >
+          End Process
         </button>
       </div>
     </div>
@@ -33,38 +48,39 @@
     <h2 class="section-title">Interview Stages</h2>
 
     <div class="interview-stages">
-      @for (stage of processStages; track stage.id) {
+      @for (stage of processStages; track stage.stageId) {
       <div
         class="interview-stage"
         [ngClass]="{
           completed: stage.status === 'COMPLETED',
-          pending: stage.status === 'PENDING',
+          pending: stage.status === 'NOT_STARTED',
           in_progress: stage.status === 'IN_PROGRESS'
         }"
       >
         <div class="stage-icon">
           @if (stage.icon === 'phone') {
           <span>📞</span>
-          } @else if (stage.icon === 'document') {
-          <span>📄</span>
           } @else if (stage.icon === 'monitor') {
           <span>💻</span>
+          }@else if (stage.icon === 'business-bag') {
+          <span>💼</span>
+          } @else {
+          <span>📄</span>
           }
         </div>
 
         <div class="stage-content">
-          <span class="stage-name">{{ stage.name }}</span>
-          @if (stage.status === 'COMPLETED') {
-          <span class="stage-status-message">{{
-            stageStatusMessage[stage.id]
-          }}</span>
-          }
+          <span class="stage-name">{{ stage.title }}</span>
+          <span class="stage-status-message">{{ stage.status }}</span>
         </div>
 
         @if (stage.status === 'IN_PROGRESS') {
         <div class="stage-actions">
           <div class="tooltip-container">
-            <span class="next-stage-arrow" (click)="moveToNextStage(stage.id)">
+            <span
+              class="next-stage-arrow"
+              (click)="moveToNextStage(stage.stageId)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -88,10 +104,19 @@
       </div>
       }
     </div>
+    @if (process.status === 'COMPLETED') {
+    <div class="process-ended-message">This process has ended.</div>
+    }
   </div>
   } @else {
   <div class="loading-container">
     <p>Loading process details...</p>
   </div>
+  } @if (showAddStageDialog) {
+  <app-add-stage
+    [processId]="currentProcessId"
+    (closeDialog)="closeAddStageDialog()"
+    (stageCreated)="onStageCreated($event)"
+  ></app-add-stage>
   }
 </div>

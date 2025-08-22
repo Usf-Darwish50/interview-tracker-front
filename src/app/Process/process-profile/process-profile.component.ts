@@ -1,82 +1,173 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, switchMap, tap, BehaviorSubject } from 'rxjs'; // Import BehaviorSubject
 import { ProcessService } from '../process.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { HiringProcessProfile } from '../model/process.model';
+import { HiringProcessProfile, ProcessStatus } from '../model/process.model';
 import { CommonModule, DatePipe } from '@angular/common';
-
-// Define a placeholder for the stages as they are not yet implemented
-const MOCK_PROCESS_STAGES = [
-  { id: 1, name: 'Resume Review', status: 'IN_PROGRESS', icon: 'document' },
-  { id: 2, name: 'Phone Screen', status: 'PENDING', icon: 'phone' },
-  { id: 3, name: 'Technical Interview', status: 'PENDING', icon: 'monitor' },
-  { id: 4, name: 'HR Interview', status: 'PENDING', icon: 'monitor' },
-];
+import { StageService } from '../../Stage/stage.service';
+import { AddStageComponent } from '../../Stage/add-stage/add-stage.component';
+import { Stage, StageStatus } from '../../Stage/model/stage.model';
 
 @Component({
   selector: 'app-process-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AddStageComponent],
   templateUrl: './process-profile.component.html',
   styleUrl: './process-profile.component.css',
 })
 export class ProcessProfileComponent implements OnInit {
-  process$!: Observable<HiringProcessProfile>;
+  // Use a BehaviorSubject to manage the process data
+  private processSubject = new BehaviorSubject<HiringProcessProfile | null>(
+    null
+  );
+  process$ = this.processSubject.asObservable();
+
   isLoading = true;
-  processStages = MOCK_PROCESS_STAGES; // Use the mock data for now
-  stageStatusMessage: { [key: number]: string } = {};
+  processStages: Stage[] = [];
+  currentProcessId!: number;
+  showAddStageDialog = false;
 
   constructor(
     private route: ActivatedRoute,
-    private processService: ProcessService
+    private processService: ProcessService,
+    private stageService: StageService
   ) {}
 
   ngOnInit(): void {
-    this.process$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        const id = Number(params.get('id'));
-        if (id) {
-          this.isLoading = true;
-          return this.processService.getProcessById(id);
-        } else {
-          console.error('No process ID found in the URL.');
-          return new Observable<any>();
-        }
-      })
-    );
+    this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) => {
+          const id = Number(params.get('id'));
+          if (id) {
+            this.currentProcessId = id;
+            this.isLoading = true;
+            this.fetchStages(id);
+            return this.processService.getProcessById(id);
+          } else {
+            console.error('No process ID found in the URL.');
+            this.isLoading = false;
+            return new Observable<any>();
+          }
+        }),
+        tap((processData: HiringProcessProfile) => {
+          // Push the fetched data into the subject
+          this.processSubject.next(processData);
+          this.isLoading = false;
+        })
+      )
+      .subscribe();
+  }
 
-    this.process$.subscribe({
-      next: () => (this.isLoading = false),
+  fetchStages(processId: number): void {
+    this.stageService.getStagesByProcessId(processId).subscribe({
+      next: (stages: Stage[]) => {
+        this.processStages = stages.map((stage) => ({
+          ...stage,
+          icon: this.getStageIcon(stage.title),
+        }));
+      },
       error: (err) => {
-        this.isLoading = false;
-        console.error('Error fetching process details:', err);
+        console.error('Error fetching stages:', err);
       },
     });
   }
 
-  // Placeholder methods for new buttons
-  addStage() {
-    console.log('Add Stage button clicked.');
+  getStageIcon(title: string): string {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.startsWith('phone')) {
+      return 'phone';
+    } else if (lowerTitle.startsWith('technical')) {
+      return 'monitor';
+    } else if (lowerTitle.startsWith('hr')) {
+      return 'business-bag'; // New case for 'HR' titles
+    }
+    return 'document';
   }
 
-  assignInterviewer() {
+  addStage(): void {
+    this.showAddStageDialog = true;
+  }
+
+  closeAddStageDialog(): void {
+    this.showAddStageDialog = false;
+  }
+
+  onStageCreated(newStage: Stage): void {
+    this.closeAddStageDialog();
+    this.fetchStages(this.currentProcessId);
+  }
+
+  endProcess(): void {
+    const currentProcess = this.processSubject.getValue();
+    if (currentProcess?.status === ProcessStatus.COMPLETED) {
+      return;
+    }
+
+    this.processService.endProcess(this.currentProcessId).subscribe({
+      next: () => {
+        console.log('Process ended successfully.');
+        // After ending, re-fetch the process to get the updated status
+        this.processService.getProcessById(this.currentProcessId).subscribe({
+          next: (updatedProcess: HiringProcessProfile) => {
+            // Push the new, updated process into the subject
+            this.processSubject.next(updatedProcess);
+          },
+          error: (err) => console.error('Error fetching updated process:', err),
+        });
+      },
+      error: (error) => {
+        console.error('Error ending process:', error);
+      },
+    });
+  }
+
+  assignInterviewer(): void {
     console.log('Assign Interviewer button clicked.');
   }
-  // Renamed method for clarity
-  moveToNextStage(stageId: number) {
-    const currentIndex = this.processStages.findIndex((s) => s.id === stageId);
-    if (currentIndex !== -1) {
-      // 1. Mark the current stage as COMPLETED
-      this.processStages[currentIndex].status = 'COMPLETED';
-      // Show the success message for this stage
-      this.stageStatusMessage[stageId] = 'Completed';
 
-      // 2. Find the next stage
-      const nextStageIndex = currentIndex + 1;
-      if (nextStageIndex < this.processStages.length) {
-        // 3. Mark the next stage as IN_PROGRESS
-        this.processStages[nextStageIndex].status = 'IN_PROGRESS';
-      }
+  moveToNextStage(stageId: number): void {
+    const currentIndex = this.processStages.findIndex(
+      (s) => s.stageId === stageId
+    );
+    if (currentIndex === -1) {
+      console.error('Stage not found.');
+      return;
     }
+
+    const currentStage = { ...this.processStages[currentIndex] };
+    const nextStage =
+      currentIndex + 1 < this.processStages.length
+        ? { ...this.processStages[currentIndex + 1] }
+        : null;
+
+    currentStage.status = StageStatus.COMPLETED;
+    if (nextStage) {
+      nextStage.status = StageStatus.IN_PROGRESS;
+    }
+
+    this.stageService
+      .updateStage(this.currentProcessId, currentStage)
+      .subscribe({
+        next: () => {
+          console.log(`Stage ${currentStage.title} marked as completed.`);
+          if (nextStage) {
+            this.stageService
+              .updateStage(this.currentProcessId, nextStage)
+              .subscribe({
+                next: () => {
+                  console.log(
+                    `Stage ${nextStage.title} marked as in progress.`
+                  );
+                  this.fetchStages(this.currentProcessId);
+                },
+                error: (err) =>
+                  console.error('Error updating next stage:', err),
+              });
+          } else {
+            this.fetchStages(this.currentProcessId);
+          }
+        },
+        error: (err) => console.error('Error updating stage:', err),
+      });
   }
 }
