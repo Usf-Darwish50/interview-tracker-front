@@ -1,1 +1,68 @@
-<p>processes works!</p>
+<div class="dashboard-actions">
+  <button class="btn-primary small" (click)="onAddProcessClick()">
+    Add Process
+  </button>
+</div>
+
+@if (showAddProcessDialog) {
+<app-add-process
+  [managerId]="managerId"
+  (closeDialog)="showAddProcessDialog = false"
+  (processCreated)="onProcessCreated()"
+>
+</app-add-process>
+}
+
+<div class="processes-container">
+  <table class="processes-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Created By</th>
+        <th>Created Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (process of processes; track process.processId) {
+      <tr>
+        <td>{{ process.title }}</td>
+        <td class="status-cell">
+          <div
+            class="status-pill-container"
+            [ngClass]="{
+              'status-pill-completed': process.status === 'COMPLETED',
+              'status-pill-in-progress': process.status === 'IN_PROGRESS',
+              'status-pill-not-started': process.status === 'NOT_STARTED'
+            }"
+          >
+            {{ formatStatus(process.status) }}
+          </div>
+        </td>
+        <td>{{ process.createdBy }}</td>
+        <td>{{ process.createdDate }}</td>
+        <td class="actions-cell">
+          <button
+            class="action-btn view-btn"
+            (click)="viewProcess(process)"
+            title="View Details"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

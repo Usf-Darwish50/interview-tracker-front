@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap, tap, BehaviorSubject } from 'rxjs'; // Import BehaviorSubject
+import { Observable, switchMap, tap, BehaviorSubject } from 'rxjs';
 import { ProcessService } from '../process.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HiringProcessProfile, ProcessStatus } from '../model/process.model';
@@ -7,11 +7,12 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { StageService } from '../../Stage/stage.service';
 import { AddStageComponent } from '../../Stage/add-stage/add-stage.component';
 import { Stage, StageStatus } from '../../Stage/model/stage.model';
+import { AssignInterviewerToStageComponent } from '../../Stage/assign-interviewer-to-stage/assign-interviewer-to-stage.component';
 
 @Component({
   selector: 'app-process-profile',
   standalone: true,
-  imports: [CommonModule, AddStageComponent],
+  imports: [CommonModule, AddStageComponent, AssignInterviewerToStageComponent],
   templateUrl: './process-profile.component.html',
   styleUrl: './process-profile.component.css',
 })
@@ -26,6 +27,7 @@ export class ProcessProfileComponent implements OnInit {
   processStages: Stage[] = [];
   currentProcessId!: number;
   showAddStageDialog = false;
+  showAssignInterviewerDialog = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -84,6 +86,14 @@ export class ProcessProfileComponent implements OnInit {
     return 'document';
   }
 
+  // NEW METHOD TO FIX THE TEMPLATE ERROR
+  getAssignedInterviewerNames(interviewers: any[]): string {
+    if (!interviewers || interviewers.length === 0) {
+      return '';
+    }
+    return interviewers.map((i) => i.username).join(', ');
+  }
+
   addStage(): void {
     this.showAddStageDialog = true;
   }
@@ -122,7 +132,16 @@ export class ProcessProfileComponent implements OnInit {
   }
 
   assignInterviewer(): void {
-    console.log('Assign Interviewer button clicked.');
+    this.showAssignInterviewerDialog = true; // Open the dialog
+  }
+
+  closeAssignInterviewerDialog(): void {
+    this.showAssignInterviewerDialog = false; // Close the dialog
+  }
+
+  onInterviewersAssigned(): void {
+    // Refresh the stages to show the newly assigned interviewers
+    this.fetchStages(this.currentProcessId);
   }
 
   moveToNextStage(stageId: number): void {
@@ -169,5 +188,10 @@ export class ProcessProfileComponent implements OnInit {
         },
         error: (err) => console.error('Error updating stage:', err),
       });
+  }
+
+  formatStatus(status: string): string {
+    const formatted = status.toLowerCase().replace(/_/g, ' ');
+    return formatted.charAt(0).toUpperCase() + formatted.slice(1);
   }
 }

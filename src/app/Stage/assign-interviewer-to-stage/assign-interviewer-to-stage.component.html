@@ -1,0 +1,82 @@
+<div class="dialog-backdrop">
+  <div class="dialog-content">
+    <div class="dialog-header">
+      <h2>Assign Interviewers</h2>
+      <button class="close-btn" (click)="onClose()">&times;</button>
+    </div>
+
+    <div class="dialog-body">
+      <div class="form-group">
+        <label for="stage-select">Select Stage:</label>
+        <select
+          id="stage-select"
+          class="form-control"
+          [(ngModel)]="selectedStageId"
+          (change)="onStageSelect()"
+        >
+          <option [ngValue]="null" disabled>-- Choose a stage --</option>
+          @for (stage of stages; track stage.stageId) {
+          <option [ngValue]="stage.stageId">
+            {{ stage.title }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <div class="interviewer-lists">
+        <div class="interviewer-list-section">
+          <h3>Available Interviewers</h3>
+          <ul class="interviewer-list">
+            @for (interviewer of availableInterviewers; track
+            interviewer.interviewerId) {
+            <li class="interviewer-item">
+              <span>{{ interviewer.username }}</span>
+              <button class="add-btn" (click)="addInterviewer(interviewer)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg>
+              </button>
+            </li>
+            }
+          </ul>
+        </div>
+
+        <div class="interviewer-list-section selected-list">
+          <h3>Assigned to Stage</h3>
+          <ul class="interviewer-list">
+            @for (interviewer of selectedInterviewers; track
+            interviewer.interviewerId) {
+            <li class="interviewer-item">
+              <span>{{ interviewer.username }}</span>
+              <button
+                class="remove-btn"
+                (click)="removeInterviewer(interviewer)"
+              >
+                &times;
+              </button>
+            </li>
+            } @empty {
+            <p class="no-selection-message">No interviewers selected.</p>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button class="btn-secondary" (click)="onClose()">Cancel</button>
+      <button class="btn-primary" (click)="assignInterviewers()">Assign</button>
+    </div>
+  </div>
+</div>

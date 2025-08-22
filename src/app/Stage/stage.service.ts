@@ -59,4 +59,25 @@ export class StageService {
       stage
     );
   }
+
+  /**
+   * Assigns interviewers to a specific stage.
+   * @param processId The ID of the hiring process.
+   * @param stageId The ID of the stage.
+   * @param interviewerIds An array of interviewer IDs.
+   * @returns An observable of the API response.
+   */
+  assignInterviewersToStage(
+    processId: number,
+    stageId: number,
+    interviewerIds: number[]
+  ): Observable<any> {
+    const body = {
+      interviewerIds: interviewerIds,
+    };
+    return this.http.put(
+      `${this.apiUrl}/${processId}/stages/${stageId}/assign-interviewers`,
+      body
+    );
+  }
 }
