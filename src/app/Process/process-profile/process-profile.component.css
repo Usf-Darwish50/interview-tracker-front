@@ -61,9 +61,43 @@
   gap: 12px;
 }
 
-/* Interview Stages Section */
+/* Interview Stages & Candidates Section (Tabs) */
 .interview-progress {
   margin: 0 32px 32px 32px;
+}
+
+.tabs-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tab-btn {
+  background-color: transparent;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  transition: color 0.2s, border-bottom-color 0.2s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+  color: #1f2937;
+}
+
+.tab-btn.active {
+  color: #208e8b;
+  border-bottom-color: #208e8b;
+  font-weight: 600;
+}
+
+.tab-content {
+  padding-top: 24px;
 }
 
 .section-title {
@@ -131,8 +165,6 @@
   color: #000000;
 }
 
-/* ... (existing CSS) ... */
-
 .stage-details {
   display: flex;
   flex-direction: column;
@@ -145,11 +177,10 @@
   margin-top: 4px;
 }
 
-/* Updated Stage Pill Styling */
 .stage-status-message {
   font-size: 20px;
   font-weight: 500;
-  text-transform: capitalize; /* This is the fix for capitalization */
+  text-transform: capitalize;
   margin-left: auto;
   padding: 6px 14px;
   border-radius: 9999px;
@@ -274,22 +305,87 @@
   box-shadow: none;
 }
 
-/* Optional: To make sure the hover effect is also disabled */
 .btn-primary.small:disabled:hover {
   background-color: #e2e8f0;
 }
 
+/* Candidates Grid Styling */
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.candidate-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.candidate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-card .card-header h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.candidate-card .card-header p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+}
+
+.candidate-card .card-body {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.candidate-card .card-body p {
+  margin: 0 0 8px 0;
+}
+
+.empty-list-message {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  padding: 40px;
+  grid-column: 1 / -1;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
-  .candidate-info {
+  .process-card {
+    margin: 16px;
+    padding: 24px;
+  }
+
+  .process-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .process-actions {
+    margin-top: 24px;
+    justify-content: center;
+  }
+
+  .meta-info {
     flex-direction: column;
     gap: 24px;
+    align-items: center;
+    text-align: left;
   }
-  .contact-info {
-    flex-direction: column;
-    gap: 16px;
-  }
-  .candidate-card,
+
   .interview-progress {
     margin: 16px;
   }

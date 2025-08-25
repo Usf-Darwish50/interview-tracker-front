@@ -48,4 +48,19 @@ export class CandidateService {
     const url = `${this.apiUrl}/${candidateId}`;
     return this.http.get(url);
   }
+
+  /**
+   * Assigns a candidate to a specific hiring process.
+   * @param candidateId The ID of the candidate to assign.
+   * @param processId The ID of the process to assign the candidate to.
+   * @returns An Observable of the API response.
+   */
+  assignCandidateToProcess(
+    candidateId: number,
+    processId: number
+  ): Observable<any> {
+    const url = `${this.apiUrl}/${candidateId}/assign/${processId}`;
+    // The PUT request body can be empty if the API doesn't require one.
+    return this.http.put(url, {});
+  }
 }

@@ -28,10 +28,10 @@
         </button>
         <button
           class="btn-primary small"
-          (click)="assignInterviewer()"
+          (click)="addCandidateToProcess()"
           [disabled]="process.status === 'COMPLETED'"
         >
-          Assign Interviewer
+          Add Candidate
         </button>
         <button
           class="btn-primary small"
@@ -45,81 +45,124 @@
   </div>
 
   <div class="interview-progress">
-    <h2 class="section-title">Interview Stages</h2>
-
-    <div class="interview-stages">
-      @for (stage of processStages; track stage.stageId) {
-      <div
-        class="interview-stage"
-        [ngClass]="{
-          completed: stage.status === 'COMPLETED',
-          pending: stage.status === 'NOT_STARTED',
-          in_progress: stage.status === 'IN_PROGRESS'
-        }"
+    <div class="tabs-container">
+      <button
+        class="tab-btn"
+        [ngClass]="{ active: activeTab === 'stages' }"
+        (click)="selectTab('stages')"
       >
-        <div class="stage-icon">
-          @if (stage.icon === 'phone') {
-          <span>📞</span>
-          } @else if (stage.icon === 'monitor') {
-          <span>💻</span>
-          } @else if (stage.icon === 'business-bag') {
-          <span>💼</span>
-          } @else {
-          <span>📄</span>
-          }
-        </div>
+        Interview Stages
+      </button>
+      <button
+        class="tab-btn"
+        [ngClass]="{ active: activeTab === 'candidates' }"
+        (click)="selectTab('candidates')"
+      >
+        Candidates
+      </button>
+    </div>
 
-        <div class="stage-content">
-          <div class="stage-details">
-            <span class="stage-name">{{ stage.title }}</span>
-            @if (stage.assignedInterviewers && stage.assignedInterviewers.length
-            > 0) {
-            <div class="interviewer-list">
-              Assigned to:
-              <span>
-                {{ getAssignedInterviewerNames(stage.assignedInterviewers) }}
-              </span>
-            </div>
+    <div class="tab-content" [hidden]="activeTab !== 'stages'">
+      <div class="interview-stages">
+        @for (stage of processStages; track stage.stageId) {
+        <div
+          class="interview-stage"
+          [ngClass]="{
+            completed: stage.status === 'COMPLETED',
+            pending: stage.status === 'NOT_STARTED',
+            in_progress: stage.status === 'IN_PROGRESS'
+          }"
+        >
+          <div class="stage-icon">
+            @if (stage.icon === 'phone') {
+            <span>📞</span>
+            } @else if (stage.icon === 'monitor') {
+            <span>💻</span>
+            } @else if (stage.icon === 'business-bag') {
+            <span>💼</span>
+            } @else {
+            <span>📄</span>
             }
           </div>
-          <span class="stage-status-message">{{
-            formatStatus(stage.status)
-          }}</span>
-        </div>
 
-        @if (stage.status === 'IN_PROGRESS') {
-        <div class="stage-actions">
-          <div class="tooltip-container">
-            <span
-              class="next-stage-arrow"
-              (click)="moveToNextStage(stage.stageId)"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-arrow-right"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </span>
-            <span class="tooltip-text">Move to next stage</span>
+          <div class="stage-content">
+            <div class="stage-details">
+              <span class="stage-name">{{ stage.title }}</span>
+              @if (stage.assignedInterviewers &&
+              stage.assignedInterviewers.length > 0) {
+              <div class="interviewer-list">
+                Assigned to:
+                <span>
+                  {{ getAssignedInterviewerNames(stage.assignedInterviewers) }}
+                </span>
+              </div>
+              }
+            </div>
+            <span class="stage-status-message">{{
+              formatStatus(stage.status)
+            }}</span>
           </div>
+
+          @if (stage.status === 'IN_PROGRESS') {
+          <div class="stage-actions">
+            <div class="tooltip-container">
+              <span
+                class="next-stage-arrow"
+                (click)="moveToNextStage(stage.stageId)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-arrow-right"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </span>
+              <span class="tooltip-text">Move to next stage</span>
+            </div>
+          </div>
+          }
         </div>
         }
       </div>
+      @if (process?.status === 'COMPLETED') {
+      <div class="process-ended-message">This process has ended.</div>
       }
     </div>
-    @if (process.status === 'COMPLETED') {
-    <div class="process-ended-message">This process has ended.</div>
-    }
+
+    <div class="tab-content" [hidden]="activeTab !== 'candidates'">
+      <div class="candidates-grid">
+        @for (candidate of processCandidates; track candidate.candidateId) {
+        <div
+          class="candidate-card"
+          (click)="viewCandidateProfile(candidate.candidateId)"
+        >
+          <div class="card-header">
+            <h4>{{ candidate.fullName }}</h4>
+            <p>{{ candidate.position }}</p>
+          </div>
+          <div class="card-body">
+            <p><strong>Status:</strong> {{ candidate.status }}</p>
+            <p>
+              <strong>Current Stage:</strong> {{ candidate.currentStageId }}
+            </p>
+          </div>
+        </div>
+        } @if (processCandidates.length === 0) {
+        <p class="empty-list-message">
+          No candidates have been added to this process yet.
+        </p>
+        }
+      </div>
+    </div>
   </div>
   } @else {
   <div class="loading-container">
@@ -131,12 +174,12 @@
     (closeDialog)="closeAddStageDialog()"
     (stageCreated)="onStageCreated($event)"
   ></app-add-stage>
-  } @if (showAssignInterviewerDialog) {
-  <app-assign-interviewer-to-stage
+  } @if (showAddCandidateDialog) {
+  <app-add-candidate-to-process
     [processId]="currentProcessId"
-    [stages]="processStages"
-    (closeDialog)="closeAssignInterviewerDialog()"
-    (interviewersAssigned)="onInterviewersAssigned()"
-  ></app-assign-interviewer-to-stage>
+    [candidates]="candidates"
+    (closeDialog)="closeAddCandidateDialog()"
+    (candidateAssigned)="onCandidateAssigned()"
+  ></app-add-candidate-to-process>
   }
 </div>

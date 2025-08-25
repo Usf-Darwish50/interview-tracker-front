@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, switchMap, tap, BehaviorSubject } from 'rxjs';
 import { ProcessService } from '../process.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Route, Router } from '@angular/router';
 import { HiringProcessProfile, ProcessStatus } from '../model/process.model';
 import { CommonModule, DatePipe } from '@angular/common';
 import { StageService } from '../../Stage/stage.service';
 import { AddStageComponent } from '../../Stage/add-stage/add-stage.component';
 import { Stage, StageStatus } from '../../Stage/model/stage.model';
 import { AssignInterviewerToStageComponent } from '../../Stage/assign-interviewer-to-stage/assign-interviewer-to-stage.component';
+import { Candidate } from '../../Candidate/models/candidate.model';
+import { CandidateService } from '../../Candidate/services/candidate.service';
+import { AddCandidateToProcessComponent } from '../../Candidate/add-candidate-to-process/add-candidate-to-process.component';
 
 @Component({
   selector: 'app-process-profile',
   standalone: true,
-  imports: [CommonModule, AddStageComponent, AssignInterviewerToStageComponent],
+  imports: [CommonModule, AddStageComponent, AddCandidateToProcessComponent],
   templateUrl: './process-profile.component.html',
   styleUrl: './process-profile.component.css',
 })
@@ -29,10 +32,18 @@ export class ProcessProfileComponent implements OnInit {
   showAddStageDialog = false;
   showAssignInterviewerDialog = false;
 
+  showAddCandidateDialog = false;
+  candidates: Candidate[] = []; // To store the list of candidates
+
+  processCandidates: Candidate[] = []; // New property to store candidates for this process
+  activeTab: 'stages' | 'candidates' = 'stages'; // New property for tab state
+
   constructor(
     private route: ActivatedRoute,
     private processService: ProcessService,
-    private stageService: StageService
+    private stageService: StageService,
+    private candidateService: CandidateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +55,9 @@ export class ProcessProfileComponent implements OnInit {
             this.currentProcessId = id;
             this.isLoading = true;
             this.fetchStages(id);
+            this.fetchProcessDetails(); // Use the new method here
+            this.fetchProcessCandidates(id); // Fetch candidates on component load
+
             return this.processService.getProcessById(id);
           } else {
             console.error('No process ID found in the URL.');
@@ -195,5 +209,59 @@ export class ProcessProfileComponent implements OnInit {
   formatStatus(status: string): string {
     const formatted = status.toLowerCase().replace(/_/g, ' ');
     return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+  }
+
+  addCandidateToProcess(): void {
+    // You should fetch the list of candidates here to populate the dialog
+    this.candidateService.getCandidates().subscribe({
+      next: (candidates) => {
+        this.candidates = candidates;
+        this.showAddCandidateDialog = true;
+      },
+      error: (err) => console.error('Error fetching candidates:', err),
+    });
+  }
+
+  closeAddCandidateDialog(): void {
+    this.showAddCandidateDialog = false;
+  }
+
+  // New method to fetch candidates for the process
+  fetchProcessCandidates(processId: number): void {
+    this.processService.getCandidatesForProcess(processId).subscribe({
+      next: (candidates: Candidate[]) => {
+        this.processCandidates = candidates;
+      },
+      error: (err) => {
+        console.error('Error fetching candidates for process:', err);
+      },
+    });
+  }
+
+  // New method to switch tabs
+  selectTab(tab: 'stages' | 'candidates'): void {
+    this.activeTab = tab;
+  }
+
+  // Update the onCandidateAssigned method to also refresh the candidates list
+  onCandidateAssigned(): void {
+    console.log('Candidate assigned. Refreshing process data...');
+    this.fetchProcessDetails();
+    this.fetchProcessCandidates(this.currentProcessId); // Refresh the candidates list
+    this.closeAddCandidateDialog();
+  }
+
+  // Add a helper method to re-fetch the main process details
+  fetchProcessDetails(): void {
+    this.processService.getProcessById(this.currentProcessId).subscribe({
+      next: (processData) => this.processSubject.next(processData),
+      error: (err) => console.error('Error fetching process details:', err),
+    });
+  }
+
+  // New method to navigate to the candidate's profile
+  viewCandidateProfile(candidateId: number): void {
+    // Navigate to the 'candidate-profile' route with the candidate's ID
+    this.router.navigate(['/candidate-profile', candidateId]);
   }
 }

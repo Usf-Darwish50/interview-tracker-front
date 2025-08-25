@@ -48,9 +48,8 @@ export class AddProcessComponent {
       title: this.processForm.value.title,
       status: 'NOT_STARTED',
       createdDate: new Date().toISOString(),
-      manager: {
-        managerId: this.managerId,
-      },
+
+      managerId: this.managerId,
       deleted: false,
     };
 
