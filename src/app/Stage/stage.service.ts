@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Stage } from './model/stage.model';
 
 @Injectable({
@@ -62,22 +62,26 @@ export class StageService {
 
   /**
    * Assigns interviewers to a specific stage.
-   * @param processId The ID of the hiring process.
-   * @param stageId The ID of the stage.
-   * @param interviewerIds An array of interviewer IDs.
-   * @returns An observable of the API response.
+   * The backend should be updated to handle a PUT request
+   * with the interviewerIds in the request body.
    */
+  // Inside StageService class
+
+  // Not recommended due to multiple network requests
   assignInterviewersToStage(
     processId: number,
     stageId: number,
     interviewerIds: number[]
   ): Observable<any> {
-    const body = {
-      interviewerIds: interviewerIds,
-    };
-    return this.http.put(
-      `${this.apiUrl}/${processId}/stages/${stageId}/assign-interviewers`,
-      body
-    );
+    // Return a combined observable to handle all requests
+    const assignmentRequests = interviewerIds.map((id) => {
+      const body = { interviewerId: id }; // The back-end only expects one
+      return this.http.put(
+        `${this.apiUrl}/${processId}/stages/${stageId}/assign-interviewer`,
+        body
+      );
+    });
+    // This will run all requests in parallel and wait for all of them to complete
+    return forkJoin(assignmentRequests);
   }
 }

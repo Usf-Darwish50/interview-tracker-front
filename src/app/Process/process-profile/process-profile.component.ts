@@ -65,6 +65,8 @@ export class ProcessProfileComponent implements OnInit {
       next: (stages: Stage[]) => {
         this.processStages = stages.map((stage) => ({
           ...stage,
+          // Initialize assignedInterviewers as an empty array if it's null or undefined
+          assignedInterviewers: stage.assignedInterviewers || [],
           icon: this.getStageIcon(stage.title),
         }));
       },
