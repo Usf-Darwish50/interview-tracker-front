@@ -142,6 +142,56 @@
   text-decoration: underline;
 }
 
+/* All your previous styles here */
+
+/* Add these new styles to your existing CSS file */
+
+.interview-stage.completed {
+  border-left-color: #28a745;
+}
+
+.interview-stage.in_progress {
+  border-left-color: #347ac4;
+}
+
+.stage-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.interviewer-list {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.stage-status-message {
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-left: auto;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  text-align: center;
+}
+
+/* Specific colors for each status */
+.interview-stage.completed .stage-status-message {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.interview-stage.in_progress .stage-status-message {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.interview-stage.pending .stage-status-message {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sidebar {

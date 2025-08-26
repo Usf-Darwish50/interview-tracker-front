@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Candidate, newCandidate } from '../models/candidate.model';
+import {
+  Candidate,
+  CandidateDetailDTO,
+  newCandidate,
+} from '../models/candidate.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -47,6 +51,19 @@ export class CandidateService {
   findCandidateById(candidateId: number): Observable<any> {
     const url = `${this.apiUrl}/${candidateId}`;
     return this.http.get(url);
+  }
+
+  /**
+   * Sends a GET request to retrieve a candidate's full details, including process ID.
+   * This uses the new backend DTO endpoint.
+   * @param candidateId The ID of the candidate to find.
+   * @returns An Observable of the CandidateDetailDTO object.
+   */
+  findCandidateDetailsById(
+    candidateId: number
+  ): Observable<CandidateDetailDTO> {
+    const url = `${this.apiUrl}/details/${candidateId}`;
+    return this.http.get<CandidateDetailDTO>(url);
   }
 
   /**

@@ -19,3 +19,15 @@ export interface Candidate {
   currentStageId: number;
   deleted: boolean;
 }
+export interface CandidateDetailDTO {
+  candidateId: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  position: string;
+  cvUrl: string;
+  status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
+  hiringProcessId?: number | null;
+  currentStageId?: number | null;
+}

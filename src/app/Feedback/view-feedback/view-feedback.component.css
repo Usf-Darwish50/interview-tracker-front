@@ -1,0 +1,170 @@
+/* Dialog Backdrop */
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Dialog Content - Increased size */
+.dialog-content {
+  background-color: #f3f4f6;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  width: 90%; /* Take up more width on smaller screens */
+  max-width: 700px; /* Increased max-width for larger dialog */
+  height: auto;
+  max-height: 80vh; /* Add a max height with vertical scroll */
+  overflow-y: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+}
+
+/* Header - Updated with flexbox */
+.dialog-header {
+  border-bottom: 2px solid #acadb1;
+  padding-bottom: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* New close button styles */
+.close-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s ease;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.close-btn:hover {
+  color: #111827;
+}
+
+/* Dialog Body */
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  min-height: 150px;
+  padding: 10px;
+}
+
+/* Specific styles for the navigation and feedback display */
+.feedback-navigation {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.nav-arrow {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-arrow:hover {
+  background-color: #e5e7eb;
+}
+
+.nav-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background-color: #f7fafc;
+}
+
+.current-feedback {
+  flex-grow: 1;
+  text-align: center;
+  padding: 0 16px;
+  overflow-wrap: break-word;
+  max-width: 60ch; /* Limit character count for better readability */
+  margin: 0 auto; /* Center the text container */
+}
+
+.feedback-text-container {
+  min-height: 40px;
+  display: block;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.feedback-text-container p {
+  font-size: 1.125rem;
+  color: #1f2937;
+  font-style: italic;
+  margin: 0;
+}
+
+.candidate-name-display {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 10px;
+  text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dialog-content {
+    width: 95%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-content {
+    padding: 20px;
+  }
+  .dialog-header h3 {
+    font-size: 22px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -24,45 +24,70 @@
 
       <div class="candidate-actions">
         <button class="btn-primary small" (click)="viewCV()">View CV</button>
+        @if (candidateFeedbacks.length > 0) {
+        <button class="btn-primary small" (click)="openViewFeedbackDialog()">
+          View Feedback
+        </button>
+        }
       </div>
     </div>
   </div>
   }
 
   <div class="interview-progress">
+    @if (processTitle) {
+    <h2 class="section-title">{{ processTitle }}</h2>
+    } @else {
     <h2 class="section-title">Interview Progress</h2>
+    }
 
     <div class="interview-stages">
-      @for (stage of interviewStages; track stage.id) {
+      @for (stage of interviewStages; track stage.stageId) {
       <div
         class="interview-stage"
         [ngClass]="{
-          rejected: stage.status === 'REJECTED',
-          pending: stage.status === 'PENDING',
-          accepted: stage.status === 'ACCEPTED'
+          rejected: stage?.status === 'REJECTED',
+          pending: stage?.status === 'NOT_STARTED',
+          completed: stage?.status === 'COMPLETED',
+          in_progress: stage?.status === 'IN_PROGRESS'
         }"
       >
         <div class="stage-icon">
-          @if (stage.icon === 'phone') {
+          @if (getStageIcon(stage.title) === 'phone') {
           <span>📞</span>
-          } @else if (stage.icon === 'document') {
+          } @else if (getStageIcon(stage.title) === 'document') {
           <span>📄</span>
-          } @else if (stage.icon === 'monitor') {
+          } @else if (getStageIcon(stage.title) === 'monitor') {
           <span>💻</span>
+          } @else if (getStageIcon(stage.title) === 'business-bag') {
+          <span>💼</span>
           }
         </div>
 
         <div class="stage-content">
-          <span class="stage-name">{{ stage.name }}</span>
-          @if (stage.status === 'REJECTED') {
-          <span class="stage-status"> Rejected </span>
-          }
+          <div class="stage-details">
+            <span class="stage-name">{{ stage.title }}</span>
+            <span class="interviewer-list">
+              {{ stage.interviewer?.fullName }}
+            </span>
+          </div>
+          <span class="stage-status-message">
+            {{ formatStatus(stage.status) }}
+          </span>
         </div>
 
-        @if (stage.feedback) {
+        @if (stage?.status === 'IN_PROGRESS') {
         <div class="stage-actions">
-          <button class="btn-primary small" (click)="viewFeedback(stage.id)">
-            View Feedback
+          <button
+            class="btn-primary small"
+            (click)="
+              openAddFeedbackDialog(
+                stage.stageId,
+                stage.interviewer?.interviewerId
+              )
+            "
+          >
+            Add Feedback
           </button>
         </div>
         }
@@ -71,3 +96,17 @@
     </div>
   </div>
 </div>
+
+@if (showAddFeedbackDialog) {
+<app-add-feedback
+  [candidateId]="candidate?.candidateId!"
+  [stageId]="selectedStageId"
+  [interviewerId]="selectedInterviewerId"
+  (closeDialog)="onAddDialogClose()"
+></app-add-feedback>
+} @if (showViewFeedbackDialog) {
+<app-view-feedback
+  [candidateId]="candidate?.candidateId!"
+  (closeDialog)="onViewDialogClose()"
+></app-view-feedback>
+}

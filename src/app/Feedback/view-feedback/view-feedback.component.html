@@ -1,0 +1,80 @@
+<div class="dialog-backdrop" (click)="closeDialog.emit()">
+  <div class="dialog-content" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h3>View Feedback ({{ currentIndex + 1 }} of {{ feedbacks.length }})</h3>
+      <button class="close-btn" (click)="closeDialog.emit()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="dialog-body">
+      @if (feedbacks.length > 0) {
+      <div class="feedback-navigation">
+        <button
+          class="nav-arrow"
+          (click)="previousFeedback()"
+          [disabled]="currentIndex === 0"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="current-feedback">
+          <div class="feedback-text-container">
+            <p>{{ currentFeedback.feedbackText }}</p>
+          </div>
+          <p class="candidate-name-display">
+            - {{ currentFeedback.candidateName }}
+          </p>
+        </div>
+
+        <button
+          class="nav-arrow"
+          (click)="nextFeedback()"
+          [disabled]="currentIndex === feedbacks.length - 1"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+      } @else {
+      <p>No feedback available for this candidate.</p>
+      }
+    </div>
+  </div>
+</div>
