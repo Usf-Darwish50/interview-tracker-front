@@ -100,7 +100,9 @@
         <div class="card-header {{ process.status }}"></div>
         <div class="card-body">
           <h3 class="process-title">{{ process.title }}</h3>
-          <span class="candidate-count"> 40 Candidates </span>
+          <span class="candidate-count">
+            {{ process.candidateCount }} Candidates
+          </span>
           <!-- <div class="process-status">
             {{
               process.status === "NOT_STARTED"

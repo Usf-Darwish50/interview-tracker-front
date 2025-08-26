@@ -4,6 +4,7 @@ export interface HiringProcessProfile {
   status: ProcessStatus;
   createdDate: string;
   createdBy: string;
+  candidateCount?: number;
 }
 
 export enum ProcessStatus {

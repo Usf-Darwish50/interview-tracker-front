@@ -60,4 +60,14 @@ export class ProcessService {
     const url = `${this.apiUrl}/${processId}/candidates`;
     return this.http.get<Candidate[]>(url);
   }
+
+  /**
+   * Fetches the number of candidates for a specific process.
+   * @param processId The ID of the process.
+   * @returns An Observable of the candidate count.
+   */
+  getCandidatesCountForProcess(processId: number): Observable<number> {
+    const url = `${this.apiUrl}/${processId}/candidates/count`;
+    return this.http.get<number>(url);
+  }
 }
