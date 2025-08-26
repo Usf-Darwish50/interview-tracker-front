@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Candidate, CandidateDetailDTO } from '../models/candidate.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CandidateService } from '../services/candidate.service';
 import { StageService } from '../../Stage/stage.service';
@@ -37,7 +37,8 @@ export class CandidateProfileComponent {
     private candidateService: CandidateService,
     private stageService: StageService,
     private processService: ProcessService,
-    private feedbackService: FeebackService
+    private feedbackService: FeebackService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -141,6 +142,10 @@ export class CandidateProfileComponent {
   // Method to close the View Feedback dialog
   onViewDialogClose(): void {
     this.showViewFeedbackDialog = false;
+  }
+
+  viewProcess(processId: number): void {
+    this.router.navigate(['/process-profile', this.processId]);
   }
 
   getStageIcon(title: string): string {

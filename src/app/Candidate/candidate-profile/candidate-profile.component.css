@@ -66,10 +66,24 @@
 }
 
 .section-title {
+  /* Keep your existing styles for the h2 element */
   font-size: 24px;
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 24px;
+}
+
+.process-link {
+  color: #208e8b; /* A shade of blue that complements your 'in_progress' color */
+  text-decoration: none; /* Removes the classic underline */
+  font-weight: 600;
+  cursor: pointer; /* Changes the mouse cursor to a pointer to indicate it's clickable */
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+}
+
+.process-link:hover {
+  color: #197a77; /* Darker shade for hover effect */
+  text-decoration: underline; /* Adds an underline on hover for better user feedback */
 }
 
 .interview-stages {

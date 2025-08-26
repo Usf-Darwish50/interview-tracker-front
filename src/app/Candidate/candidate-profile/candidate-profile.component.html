@@ -36,7 +36,11 @@
 
   <div class="interview-progress">
     @if (processTitle) {
-    <h2 class="section-title">{{ processTitle }}</h2>
+    <h2 class="section-title">
+      <a (click)="viewProcess(processId!)" class="process-link">
+        {{ processTitle }}
+      </a>
+    </h2>
     } @else {
     <h2 class="section-title">Interview Progress</h2>
     }
