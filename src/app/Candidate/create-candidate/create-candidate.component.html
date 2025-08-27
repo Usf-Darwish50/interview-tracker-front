@@ -5,6 +5,24 @@
       <h2 class="form-title">Create Candidate Profile</h2>
     </div>
 
+    @if (showSuccessMessage) {
+    <div class="success-message-container">
+      <p class="success-message">Candidate created successfully!</p>
+      <svg
+        class="success-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-8.82"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+    } @else {
     <form
       [formGroup]="candidateForm"
       class="candidate-form"
@@ -24,6 +42,7 @@
                 candidateForm.get('fullName')?.invalid &&
                 candidateForm.get('fullName')?.touched
               "
+              [disabled]="isSubmitting"
             />
             <!-- Conditional display of validation errors for fullName -->
             @if (candidateForm.get('fullName')?.invalid &&
@@ -50,6 +69,7 @@
                 candidateForm.get('phone')?.invalid &&
                 candidateForm.get('phone')?.touched
               "
+              [disabled]="isSubmitting"
             />
             <!-- Conditional display of validation errors for phone -->
             @if (candidateForm.get('phone')?.invalid &&
@@ -78,6 +98,7 @@
                 candidateForm.get('email')?.invalid &&
                 candidateForm.get('email')?.touched
               "
+              [disabled]="isSubmitting"
             />
             <!-- Conditional display of validation errors for email -->
             @if (candidateForm.get('email')?.invalid &&
@@ -104,6 +125,7 @@
                 candidateForm.get('position')?.invalid &&
                 candidateForm.get('position')?.touched
               "
+              [disabled]="isSubmitting"
             />
             <!-- Conditional display of validation errors for position -->
             @if (candidateForm.get('position')?.invalid &&
@@ -132,6 +154,7 @@
                 candidateForm.get('address')?.invalid &&
                 candidateForm.get('address')?.touched
               "
+              [disabled]="isSubmitting"
             />
             <!-- Conditional display of validation errors for address -->
             @if (candidateForm.get('address')?.invalid &&
@@ -158,6 +181,7 @@
                 candidateForm.get('resumeUrl')?.invalid &&
                 candidateForm.get('resumeUrl')?.touched
               "
+              [disabled]="isSubmitting"
             />
             <!-- Conditional display of validation errors for resumeUrl -->
             @if (candidateForm.get('resumeUrl')?.invalid &&
@@ -178,16 +202,12 @@
         <button
           type="submit"
           class="btn-primary"
-          [disabled]="candidateForm.invalid"
+          [disabled]="candidateForm.invalid || isSubmitting"
         >
-          Create Candidate
+          {{ isSubmitting ? "Creating..." : "Create Candidate" }}
         </button>
       </div>
-      @if (notificationMessage) {
-      <div class="notification-dialog">
-        {{ notificationMessage }}
-      </div>
-      }
     </form>
+    }
   </div>
 </div>

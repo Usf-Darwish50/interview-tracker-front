@@ -1,5 +1,5 @@
-/* create-candidate.component.css */
-/* Existing styles */
+/* add-interviewer.component.css */
+/* Add this to a new or existing CSS file for the component */
 .form-container {
   min-height: 100vh;
   padding: 0px 20px 40px;
@@ -34,7 +34,7 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-.candidate-form {
+.interviewer-form {
   padding: 40px 40px 32px;
 }
 
@@ -71,6 +71,7 @@
 }
 
 .form-group input {
+  width: 100%;
   padding: 12px 10px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -88,6 +89,7 @@
 }
 
 .form-group input:focus {
+  outline: none;
   border-color: #9ca3af;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
@@ -97,23 +99,13 @@
   border-color: #9ca3af;
 }
 
-/* Form Actions */
-.form-actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  padding-top: 9px;
-}
-.submit-button:active {
-  transform: translateY(0);
-}
 /* Validation Styles */
 .form-group input.is-invalid {
-  border-color: #ef4444; /* Red border for invalid inputs */
+  border-color: #ef4444;
 }
 
 .validation-error {
-  color: #ef4444; /* Red color for error messages */
+  color: #ef4444;
   font-size: 14px;
   margin-top: 4px;
 }
@@ -125,9 +117,15 @@
   gap: 12px;
   padding-top: 9px;
 }
-.submit-button:active {
-  transform: translateY(0);
+
+.btn-primary:disabled {
+  background-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transition: none;
 }
+
 /* New styles for the success message container */
 .success-message-container {
   text-align: center;
@@ -148,17 +146,9 @@
   height: 48px;
 }
 
+/* Remove the old notification dialog style */
 .notification-dialog {
   display: none;
-}
-
-/* Added style for the disabled button */
-.btn-primary:disabled {
-  background-color: #e2e8f0; /* A light gray background color */
-  color: #94a3b8; /* A darker gray text color */
-  cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
-  box-shadow: none; /* Remove any shadow */
-  transition: none; /* No transition for a disabled state */
 }
 
 /* Responsive Design */
@@ -166,30 +156,24 @@
   .form-container {
     padding: 80px 16px 24px;
   }
-
   .form-card {
     border-radius: 12px;
   }
-
   .form-header {
     padding: 24px 24px 20px;
   }
-
-  .candidate-form {
+  .interviewer-form {
     padding: 24px;
   }
-
   .form-title {
     font-size: 24px;
   }
-
   .form-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin-bottom: 24px;
   }
-
   .form-actions {
     flex-direction: column-reverse;
     gap: 12px;
@@ -204,19 +188,15 @@
   .form-container {
     padding: 80px 12px 20px;
   }
-
   .form-header {
     padding: 20px 20px 16px;
   }
-
-  .candidate-form {
+  .interviewer-form {
     padding: 20px;
   }
-
   .form-title {
     font-size: 22px;
   }
-
   .form-subtitle {
     font-size: 14px;
   }

@@ -1,9 +1,10 @@
 export interface Interviewer {
   interviewerId: number;
-  username: string;
   name: string;
+  position: string;
+  username: string;
   email: string;
   phone: string;
-  password?: string;
+  password: string;
   deleted: boolean;
 }

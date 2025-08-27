@@ -5,6 +5,8 @@ import { ProcessesComponent } from './Process/processes/processes.component';
 import { CreateCandidateComponent } from './Candidate/create-candidate/create-candidate.component';
 import { CandidateProfileComponent } from './Candidate/candidate-profile/candidate-profile.component';
 import { ProcessProfileComponent } from './Process/process-profile/process-profile.component';
+import { InterviewersListComponent } from './Interviewer/interviewers-list/interviewers-list.component';
+import { AddInterviewerComponent } from './Interviewer/add-interviewer/add-interviewer.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -14,4 +16,6 @@ export const routes: Routes = [
   { path: 'add-candidate', component: CreateCandidateComponent },
   { path: 'candidate-profile/:id', component: CandidateProfileComponent },
   { path: 'process-profile/:id', component: ProcessProfileComponent },
+  { path: 'interviewers', component: InterviewersListComponent },
+  { path: 'add-interviewer', component: AddInterviewerComponent },
 ];

@@ -13,10 +13,28 @@ export class InterviewerService {
   constructor(private http: HttpClient) {}
 
   /**
+   * Adds a new interviewer to the database.
+   * @param interviewer The interviewer object to be created.
+   * @returns An observable of the newly created Interviewer object.
+   */
+  addInterviewer(interviewer: Interviewer): Observable<Interviewer> {
+    return this.http.post<Interviewer>(this.apiUrl, interviewer);
+  }
+
+  /**
    * Fetches all interviewers from the API.
    * @returns An observable of an array of Interviewer objects.
    */
   getAllInterviewers(): Observable<Interviewer[]> {
     return this.http.get<Interviewer[]>(this.apiUrl);
+  }
+
+  /**
+   * Deletes an interviewer by their ID.
+   * @param id The ID of the interviewer to delete.
+   * @returns An observable of the response from the delete request.
+   */
+  deleteInterviewer(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

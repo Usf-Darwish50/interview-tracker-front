@@ -1,0 +1,175 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h2 class="form-title">Create Interviewer Profile</h2>
+    </div>
+
+    @if (showSuccessMessage) {
+    <div class="success-message-container">
+      <p class="success-message">Interviewer created successfully!</p>
+      <svg
+        class="success-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-8.82"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+    } @else {
+    <form
+      [formGroup]="interviewerForm"
+      class="interviewer-form"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              formControlName="username"
+              placeholder="Interviewer's username"
+              [class.is-invalid]="
+                interviewerForm.get('username')?.invalid &&
+                interviewerForm.get('username')?.touched
+              "
+              [disabled]="isSubmitting"
+            />
+            @if (interviewerForm.get('username')?.invalid &&
+            interviewerForm.get('username')?.touched) {
+            <div class="validation-error">
+              @if (interviewerForm.get('username')?.hasError('required')) {
+              <p>Username is required.</p>
+              } @if (interviewerForm.get('username')?.hasError('minlength')) {
+              <p>Username must be at least 3 characters long.</p>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="interviewer@example.com"
+              [class.is-invalid]="
+                interviewerForm.get('email')?.invalid &&
+                interviewerForm.get('email')?.touched
+              "
+              [disabled]="isSubmitting"
+            />
+            @if (interviewerForm.get('email')?.invalid &&
+            interviewerForm.get('email')?.touched) {
+            <div class="validation-error">
+              @if (interviewerForm.get('email')?.hasError('required')) {
+              <p>Email is required.</p>
+              } @if (interviewerForm.get('email')?.hasError('email')) {
+              <p>Please enter a valid email address.</p>
+              }
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              placeholder="+01200000000"
+              [class.is-invalid]="
+                interviewerForm.get('phone')?.invalid &&
+                interviewerForm.get('phone')?.touched
+              "
+              [disabled]="isSubmitting"
+            />
+            @if (interviewerForm.get('phone')?.invalid &&
+            interviewerForm.get('phone')?.touched) {
+            <div class="validation-error">
+              @if (interviewerForm.get('phone')?.hasError('required')) {
+              <p>Phone number is required.</p>
+              } @if (interviewerForm.get('phone')?.hasError('pattern')) {
+              <p>Please enter a valid phone number.</p>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="position">Position</label>
+            <input
+              id="position"
+              type="text"
+              formControlName="position"
+              placeholder="Recruiter"
+              [class.is-invalid]="
+                interviewerForm.get('position')?.invalid &&
+                interviewerForm.get('position')?.touched
+              "
+              [disabled]="isSubmitting"
+            />
+            @if (interviewerForm.get('position')?.invalid &&
+            interviewerForm.get('position')?.touched) {
+            <div class="validation-error">
+              @if (interviewerForm.get('position')?.hasError('required')) {
+              <p>Position is required.</p>
+              } @if (interviewerForm.get('position')?.hasError('minlength')) {
+              <p>Position must be at least 3 characters long.</p>
+              }
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Enter a password"
+              [class.is-invalid]="
+                interviewerForm.get('password')?.invalid &&
+                interviewerForm.get('password')?.touched
+              "
+              [disabled]="isSubmitting"
+            />
+            @if (interviewerForm.get('password')?.invalid &&
+            interviewerForm.get('password')?.touched) {
+            <div class="validation-error">
+              @if (interviewerForm.get('password')?.hasError('required')) {
+              <p>Password is required.</p>
+              } @if (interviewerForm.get('password')?.hasError('minlength')) {
+              <p>Password must be at least 6 characters long.</p>
+              }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="interviewerForm.invalid || isSubmitting"
+        >
+          {{ isSubmitting ? "Creating..." : "Create Interviewer" }}
+        </button>
+      </div>
+    </form>
+    }
+  </div>
+</div>

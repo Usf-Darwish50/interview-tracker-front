@@ -1,0 +1,203 @@
+/* Added complete table styling to match the image design */
+.candidates-container {
+  width: 100%;
+
+  background: white;
+  border-radius: 12px;
+  /* Enhanced box shadow for a more "floating" effect */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+.dashboard-actions {
+  display: flex;
+  justify-content: flex-end; /* Pushes content to the right */
+  gap: 16px; /* Adds space between the buttons */
+  margin-bottom: 20px; /* Adds a bit of space below the buttons */
+}
+
+.btn-primary.small {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.candidates-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  table-layout: fixed; /* This is the key change for equal column widths */
+}
+
+.candidates-table thead {
+  background-color: #f3f4f6;
+}
+
+.candidates-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  border-bottom: 1px solid #e5e7eb;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.candidates-table tbody tr {
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  /* Add a slight transform on hover for a lift effect */
+  transition: transform 0.2s ease, background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.candidates-table tbody tr:hover {
+  background-color: #f0f4f8; /* Darker background color on hover */
+  /* Add a subtle shadow on hover to make it pop */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.candidates-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.candidates-table td {
+  padding: 16px 20px;
+  font-size: 15px;
+  color: #000000;
+  vertical-align: middle;
+}
+
+/* Updated styling for centering and spacing */
+.candidates-table th,
+.candidates-table td {
+  text-align: center;
+}
+
+.candidates-table th:first-child,
+.candidates-table td:first-child {
+  text-align: left;
+}
+
+.candidates-table td:first-child {
+  padding-left: 20px;
+}
+
+.candidates-table td:last-child {
+  padding-right: 20px;
+}
+
+.actions-cell {
+  text-align: center;
+  white-space: nowrap; /* Prevents wrapping of action buttons */
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn {
+  color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.delete-btn:hover {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.view-btn {
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.view-btn:hover {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+.notification-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centering magic */
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text for better contrast */
+  border: 1px solid #388e3c; /* Darker green border */
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A more pronounced shadow */
+  z-index: 9999; /* A high value to ensure it's on top */
+  text-align: center;
+  border-radius: 8px; /* Slightly more rounded corners */
+  min-width: 300px; /* Wider for better readability */
+  animation: fadeInOut 3s ease forwards; /* Optional: adds a fade effect */
+}
+
+/* Optional: Add a subtle fade-in and fade-out animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .candidates-table th,
+  .candidates-table td {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .action-btn {
+    width: 28px;
+    height: 28px;
+    margin: 0 2px;
+  }
+
+  .action-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .candidates-container {
+    border-radius: 8px;
+    margin: 0 -16px;
+  }
+
+  .candidates-table th,
+  .candidates-table td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .candidates-table th {
+    font-size: 11px;
+  }
+}
