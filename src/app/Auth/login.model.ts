@@ -3,6 +3,7 @@ export interface LoginResponse {
   user?: {
     username: string;
     role: string;
+    id: number;
   };
   message?: string;
 }

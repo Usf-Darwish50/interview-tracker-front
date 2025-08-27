@@ -1,3 +1,4 @@
+// src/app/login/login.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
@@ -10,6 +11,7 @@ import { LoginService } from '../login.service';
 import { Route, Router } from '@angular/router';
 import { Credentials } from '../login.model';
 import { catchError, throwError } from 'rxjs';
+import { UserStateService } from '../user-state.service';
 
 @Component({
   selector: 'app-login',
@@ -29,22 +31,17 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private userService: UserStateService // Add this to the constructor
   ) {}
 
   ngOnInit(): void {
-    // Initialize the form with username and password fields.
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
 
-  /**
-   * @description
-   * Handles the form submission for user login.
-   * It validates the form, calls the login service, and manages UI states.
-   */
   onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -54,11 +51,9 @@ export class LoginComponent {
     this.isSubmitting = true;
     this.showErrorMessage = false;
 
-    // Call the login service with form data.
     this.loginService
       .login(this.loginForm.value as Credentials)
       .pipe(
-        // Use catchError to gracefully handle HTTP errors from the API.
         catchError((error) => {
           console.error('Login failed:', error);
           this.isSubmitting = false;
@@ -72,18 +67,17 @@ export class LoginComponent {
         next: (response) => {
           if (response.success && response.user) {
             console.log('Login successful!', response);
-            // Store user data in localStorage.
-            localStorage.setItem('currentUser', JSON.stringify(response.user));
-            // Set success message and user for display.
+            // Replace localStorage.setItem with the UserService login method
+            this.userService.login(response.user);
+
             this.showSuccessMessage = true;
             this.loggedInUser = response.user.username;
+            console.log(this.loggedInUser);
 
             setTimeout(() => {
-              // Redirect to the dashboard or another page after a brief delay.
               this.router.navigate(['/dashboard']);
             }, 1500);
           } else {
-            // Handle cases where the API returns a non-error status but a failed login.
             this.showErrorMessage = true;
             this.errorMessage =
               response.message || 'Login failed. Please try again.';
@@ -91,7 +85,6 @@ export class LoginComponent {
           }
         },
         error: (err) => {
-          // This block catches any unhandled errors, although catchError should handle most.
           console.error('API call failed:', err);
           this.isSubmitting = false;
         },

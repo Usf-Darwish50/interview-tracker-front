@@ -1,5 +1,6 @@
+// src/app/navbar/navbar.component.ts
 import { UpperCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core'; // Add OnInit and OnDestroy
 import {
   NavigationEnd,
   Router,
@@ -7,6 +8,7 @@ import {
   RouterLinkActive,
 } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
+import { User, UserStateService } from '../Auth/user-state.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,13 +17,15 @@ import { filter, Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
+  // Implement OnInit and OnDestroy
   isUserMenuOpen = false;
   showNavbar = true;
   loggedInUser = 'Guest';
   private routerSubscription: Subscription | undefined;
+  private userSubscription: Subscription | undefined; // Create a subscription for the user service
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserStateService) {} // Inject the UserService
 
   ngOnInit(): void {
     // Check the current route on initialization
@@ -34,14 +38,22 @@ export class NavbarComponent {
         this.checkRoute();
       });
 
-    // Load the user's name from local storage
-    this.loadUserName();
+    // Subscribe to the user service to get real-time updates
+    this.userSubscription = this.userService.currentUser$.subscribe(
+      (user: User | null) => {
+        this.loggedInUser = user ? user.username : 'Guest';
+      }
+    );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from the router to prevent memory leaks
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
+    }
+    // Unsubscribe from the user service to prevent memory leaks
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 
@@ -54,24 +66,6 @@ export class NavbarComponent {
     this.showNavbar = this.router.url !== '/login';
   }
 
-  /**
-   * @description
-   * Retrieves the username from local storage.
-   */
-  loadUserName(): void {
-    const userString = localStorage.getItem('currentUser');
-    if (userString) {
-      try {
-        const user = JSON.parse(userString);
-        if (user.username) {
-          this.loggedInUser = user.username;
-        }
-      } catch (e) {
-        console.error('Could not parse user data from localStorage', e);
-      }
-    }
-  }
-
   onSearchClick(): void {
     console.log('Search clicked');
   }
@@ -81,8 +75,8 @@ export class NavbarComponent {
   }
 
   onLogout(): void {
-    // Clear user data from local storage
-    localStorage.removeItem('currentUser');
+    // Use the service to handle logout
+    this.userService.logout();
     // Navigate to the login page
     this.router.navigate(['/login']);
   }
