@@ -309,27 +309,49 @@
   background-color: #e2e8f0;
 }
 
-/* Candidates Grid Styling */
-.candidates-grid {
+/* Candidates and Interviewers Grid Styling */
+.candidates-grid,
+.interviewers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
 
-.candidate-card {
+.candidate-card,
+.interviewer-card {
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
-.candidate-card:hover {
+.candidate-card:hover,
+.interviewer-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Specific styling for the interviewer card to accommodate the button */
+.interviewer-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.interviewer-card .card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.interviewer-card .card-details {
+  flex: 1;
+}
+
+.interviewer-card .card-header h4,
 .candidate-card .card-header h4 {
   font-size: 1.25rem;
   font-weight: 600;
@@ -337,20 +359,28 @@
   margin: 0;
 }
 
+.interviewer-card .card-header p,
 .candidate-card .card-header p {
   font-size: 0.875rem;
   color: #6b7280;
   margin: 4px 0 0 0;
 }
 
+.interviewer-card .card-body,
 .candidate-card .card-body {
   margin-top: 16px;
   font-size: 0.9rem;
   color: #374151;
 }
 
+.interviewer-card .card-body p,
 .candidate-card .card-body p {
   margin: 0 0 8px 0;
+}
+
+.card-actions {
+  margin-left: auto;
+  align-self: flex-start;
 }
 
 .empty-list-message {

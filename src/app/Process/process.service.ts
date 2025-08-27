@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Candidate } from '../Candidate/models/candidate.model';
+import { Interviewer } from '../Interviewer/model/interviewer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -59,6 +60,15 @@ export class ProcessService {
   getCandidatesForProcess(processId: number): Observable<Candidate[]> {
     const url = `${this.apiUrl}/${processId}/candidates`;
     return this.http.get<Candidate[]>(url);
+  }
+  /**
+   * Sends a GET request to retrieve all Interviewers for a specific process.
+   * @param processId The ID of the process.
+   * @returns An Observable of an array of Interviewer objects.
+   */
+  getInterviewersForProcess(processId: number): Observable<Interviewer[]> {
+    const url = `${this.apiUrl}/${processId}/interviewers`;
+    return this.http.get<Interviewer[]>(url);
   }
 
   /**

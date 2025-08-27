@@ -1,0 +1,27 @@
+/* src/app/unassign-interviewer/unassign-interviewer.component.css */
+.btn-danger {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #ef4444; /* Red color for danger actions */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626; /* Darker red on hover */
+}
+
+.btn-danger:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); /* Focus ring */
+}
+
+.btn-danger:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}

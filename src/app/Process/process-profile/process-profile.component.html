@@ -1,3 +1,5 @@
+<!-- src/app/process/process-profile/process-profile.component.html -->
+
 <div class="main-content">
   @if (process$ | async; as process) {
   <div class="process-card">
@@ -35,6 +37,13 @@
         </button>
         <button
           class="btn-primary small"
+          (click)="addInterviewerToProcess()"
+          [disabled]="process.status === 'COMPLETED'"
+        >
+          Add Interviewer
+        </button>
+        <button
+          class="btn-primary small"
           (click)="endProcess()"
           [disabled]="process.status === 'COMPLETED'"
         >
@@ -60,8 +69,16 @@
       >
         Candidates
       </button>
+      <button
+        class="tab-btn"
+        [ngClass]="{ active: activeTab === 'interviewers' }"
+        (click)="selectTab('interviewers')"
+      >
+        Interviewers
+      </button>
     </div>
 
+    <!-- Tab Content -->
     <div class="tab-content" [hidden]="activeTab !== 'stages'">
       <div class="interview-stages">
         @for (stage of processStages; track stage.stageId) {
@@ -160,6 +177,35 @@
         }
       </div>
     </div>
+
+    <!-- New tab content for Interviewers -->
+    <div class="tab-content" [hidden]="activeTab !== 'interviewers'">
+      <div class="interviewers-grid">
+        @for (interviewer of processInterviewers; track
+        interviewer.interviewerId) {
+        <div class="interviewer-card">
+          <div class="card-content">
+            <div class="card-details">
+              <h4>{{ interviewer.name }}</h4>
+              <p>{{ interviewer.position }}</p>
+              <p><strong>Username:</strong> {{ interviewer.username }}</p>
+              <p><strong>Email:</strong> {{ interviewer.email }}</p>
+            </div>
+            <div class="card-actions">
+              <app-unassign-interviewer
+                [interviewerId]="interviewer.interviewerId"
+                (interviewerUnassigned)="onInterviewerAssigned()"
+              ></app-unassign-interviewer>
+            </div>
+          </div>
+        </div>
+        } @if (processInterviewers.length === 0) {
+        <p class="empty-list-message">
+          No interviewers have been assigned to this process yet.
+        </p>
+        }
+      </div>
+    </div>
   </div>
   } @else {
   <div class="loading-container">
@@ -178,5 +224,13 @@
     (closeDialog)="closeAddCandidateDialog()"
     (candidateAssigned)="onCandidateAssigned()"
   ></app-add-candidate-to-process>
+  } @if (showAddInterviewerDialog) {
+
+  <app-add-interviewers-to-process
+    [processId]="currentProcessId"
+    [interviewers]="availableInterviewers"
+    (closeDialog)="closeAddInterviewerDialog()"
+    (interviewerAssigned)="onInterviewerAssigned()"
+  ></app-add-interviewers-to-process>
   }
 </div>

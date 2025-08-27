@@ -37,4 +37,33 @@ export class InterviewerService {
   deleteInterviewer(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+  /**
+   * @description
+   * Assigns an interviewer to a specific interview process.
+   * @param interviewerId The ID of the interviewer.
+   * @param processId The ID of the process to assign the interviewer to.
+   * @returns An observable of the API response.
+   */
+  assignInterviewerToProcess(
+    interviewerId: number,
+    processId: number
+  ): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/${interviewerId}/assign-process/${processId}`,
+      {}
+    );
+  }
+
+  /**
+   * @description
+   * Unassigns an interviewer from their current interview process.
+   * @param interviewerId The ID of the interviewer to unassign.
+   * @returns An observable of the API response.
+   */
+  unassignInterviewerFromProcess(interviewerId: number): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/${interviewerId}/unassign-process`,
+      {}
+    );
+  }
 }

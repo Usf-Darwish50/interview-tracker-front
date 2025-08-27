@@ -1,0 +1,60 @@
+<div class="dialog-backdrop" (click)="closeDialog.emit()">
+  <div class="dialog-content" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h3>Add Interviewer to Process</h3>
+      <button class="close-btn" (click)="closeDialog.emit()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="dialog-body">
+      <div class="form-group">
+        <label>Select Interviewers</label>
+        <div class="candidate-list-container">
+          @if (interviewers && interviewers.length > 0) { @for (interviewer of
+          interviewers; track interviewer.interviewerId) {
+          <div class="candidate-list-item">
+            <input
+              type="checkbox"
+              [id]="'interviewer-' + interviewer.interviewerId"
+              [value]="interviewer.interviewerId"
+              (change)="onInterviewerSelect($event)"
+            />
+            <label [for]="'interviewer-' + interviewer.interviewerId">
+              {{ interviewer.username }} ({{ interviewer.position }})
+            </label>
+          </div>
+          } } @else {
+          <p class="no-candidates-message">
+            No interviewers available to assign.
+          </p>
+          }
+        </div>
+      </div>
+
+      <div class="dialog-actions">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!selectedInterviewerIds.length"
+          (click)="assignInterviewers()"
+        >
+          Assign ({{ selectedInterviewerIds.length }})
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

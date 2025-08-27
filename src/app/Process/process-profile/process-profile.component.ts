@@ -11,11 +11,21 @@ import { AssignInterviewerToStageComponent } from '../../Stage/assign-interviewe
 import { Candidate } from '../../Candidate/models/candidate.model';
 import { CandidateService } from '../../Candidate/services/candidate.service';
 import { AddCandidateToProcessComponent } from '../../Candidate/add-candidate-to-process/add-candidate-to-process.component';
+import { Interviewer } from '../../Interviewer/model/interviewer.model';
+import { InterviewerService } from '../../Interviewer/service/interviewer.service';
+import { AddInterviewersToProcessComponent } from '../../Interviewer/add-interviewers-to-process/add-interviewers-to-process.component';
+import { UnassignInterviewerComponent } from '../../Interviewer/unassign-interviewer/unassign-interviewer.component';
 
 @Component({
   selector: 'app-process-profile',
   standalone: true,
-  imports: [CommonModule, AddStageComponent, AddCandidateToProcessComponent],
+  imports: [
+    CommonModule,
+    AddStageComponent,
+    AddCandidateToProcessComponent,
+    AddInterviewersToProcessComponent,
+    UnassignInterviewerComponent,
+  ],
   templateUrl: './process-profile.component.html',
   styleUrl: './process-profile.component.css',
 })
@@ -33,16 +43,21 @@ export class ProcessProfileComponent implements OnInit {
   showAssignInterviewerDialog = false;
 
   showAddCandidateDialog = false;
-  candidates: Candidate[] = []; // To store the list of candidates
+  candidates: Candidate[] = [];
+  processCandidates: Candidate[] = [];
 
-  processCandidates: Candidate[] = []; // New property to store candidates for this process
-  activeTab: 'stages' | 'candidates' = 'stages'; // New property for tab state
+  showAddInterviewerDialog = false;
+  availableInterviewers: Interviewer[] = [];
+  processInterviewers: Interviewer[] = [];
+
+  activeTab: 'stages' | 'candidates' | 'interviewers' = 'stages'; // New property for tab state
 
   constructor(
     private route: ActivatedRoute,
     private processService: ProcessService,
     private stageService: StageService,
     private candidateService: CandidateService,
+    private interviewerService: InterviewerService,
     private router: Router
   ) {}
 
@@ -57,6 +72,7 @@ export class ProcessProfileComponent implements OnInit {
             this.fetchStages(id);
             this.fetchProcessDetails(); // Use the new method here
             this.fetchProcessCandidates(id); // Fetch candidates on component load
+            this.fetchProcessInterviewers(id); // Fetch interviewers for the process
 
             return this.processService.getProcessById(id);
           } else {
@@ -212,18 +228,49 @@ export class ProcessProfileComponent implements OnInit {
   }
 
   addCandidateToProcess(): void {
-    // You should fetch the list of candidates here to populate the dialog
     this.candidateService.getCandidates().subscribe({
-      next: (candidates) => {
-        this.candidates = candidates;
+      next: (allCandidates) => {
+        // Get the IDs of candidates already in this process
+        const assignedCandidateIds = new Set(
+          this.processCandidates.map((c) => c.candidateId)
+        );
+
+        // Filter the list to show only unassigned candidates
+        this.candidates = allCandidates.filter(
+          (candidate) => !assignedCandidateIds.has(candidate.candidateId)
+        );
+
         this.showAddCandidateDialog = true;
       },
       error: (err) => console.error('Error fetching candidates:', err),
     });
   }
+  // New method for adding interviewers
+  addInterviewerToProcess(): void {
+    this.interviewerService.getAllInterviewers().subscribe({
+      next: (allInterviewers) => {
+        // Get the IDs of interviewers already in this process
+        const assignedInterviewerIds = new Set(
+          this.processInterviewers.map((i) => i.interviewerId)
+        );
+
+        // Filter the list to show only unassigned interviewers
+        this.availableInterviewers = allInterviewers.filter(
+          (interviewer) =>
+            !assignedInterviewerIds.has(interviewer.interviewerId)
+        );
+
+        this.showAddInterviewerDialog = true;
+      },
+      error: (err) => console.error('Error fetching interviewers:', err),
+    });
+  }
 
   closeAddCandidateDialog(): void {
     this.showAddCandidateDialog = false;
+  }
+  closeAddInterviewerDialog(): void {
+    this.showAddInterviewerDialog = false;
   }
 
   // New method to fetch candidates for the process
@@ -237,9 +284,21 @@ export class ProcessProfileComponent implements OnInit {
       },
     });
   }
+  // New method to fetch interviewers for the process
+  fetchProcessInterviewers(processId: number): void {
+    this.processService.getInterviewersForProcess(processId).subscribe({
+      next: (interviewers: Interviewer[]) => {
+        this.processInterviewers = interviewers;
+      },
+      error: (err) => {
+        console.error('Error fetching interviewers for process:', err);
+      },
+    });
+  }
 
   // New method to switch tabs
-  selectTab(tab: 'stages' | 'candidates'): void {
+  selectTab(tab: 'stages' | 'candidates' | 'interviewers'): void {
+    // Updated type
     this.activeTab = tab;
   }
 
@@ -249,6 +308,14 @@ export class ProcessProfileComponent implements OnInit {
     this.fetchProcessDetails();
     this.fetchProcessCandidates(this.currentProcessId); // Refresh the candidates list
     this.closeAddCandidateDialog();
+  }
+
+  // New method to handle interviewer assignment
+  onInterviewerAssigned(): void {
+    console.log('Interviewer assigned. Refreshing process data...');
+    this.fetchProcessDetails();
+    this.fetchProcessInterviewers(this.currentProcessId);
+    this.closeAddInterviewerDialog();
   }
 
   // Add a helper method to re-fetch the main process details
