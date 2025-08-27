@@ -7,9 +7,11 @@ import { CandidateProfileComponent } from './Candidate/candidate-profile/candida
 import { ProcessProfileComponent } from './Process/process-profile/process-profile.component';
 import { InterviewersListComponent } from './Interviewer/interviewers-list/interviewers-list.component';
 import { AddInterviewerComponent } from './Interviewer/add-interviewer/add-interviewer.component';
+import { LoginComponent } from './Auth/login/login.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'candidates', component: CandidatesComponent },
   { path: 'processes', component: ProcessesComponent },

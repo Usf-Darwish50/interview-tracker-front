@@ -1,10 +1,10 @@
+@if (showNavbar) {
 <nav class="navbar">
   <div class="navbar-container">
     <!-- Brand -->
     <div class="navbar-brand">
       <a routerLink="/dashboard" class="navbar-brand">
         <img src="assets/images/ntg-logo.jpg" alt="NTG Clarity" class="logo" />
-        <!-- <span class="brand-text">NTG Clarity</span> -->
         <div class="brand-divider"></div>
         <h1 class="app-title">Interview Tracker</h1>
       </a>
@@ -55,17 +55,12 @@
 
     <!-- Actions -->
     <div class="navbar-actions">
-      <!-- <button class="search-btn" aria-label="Search">
-        <svg class="icon" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.35-4.35"></path>
-        </svg>
-      </button> -->
-
       <div class="user-menu" (click)="toggleUserMenu()">
         <button class="user-btn">
-          <div class="user-avatar">YD</div>
-          <span class="user-name">Youssef Darwish</span>
+          <div class="user-avatar">
+            {{ loggedInUser[0] | uppercase }}{{ loggedInUser[1] | uppercase }}
+          </div>
+          <span class="user-name">{{ loggedInUser }}</span>
           <svg class="icon" viewBox="0 0 24 24">
             <polyline points="6,9 12,15 18,9"></polyline>
           </svg>
@@ -73,7 +68,7 @@
 
         @if (isUserMenuOpen) {
         <div class="dropdown-menu">
-          <a class="dropdown-item">
+          <a class="dropdown-item" (click)="onLogout()">
             <svg class="icon" viewBox="0 0 24 24">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
@@ -87,3 +82,4 @@
     </div>
   </div>
 </nav>
+}
