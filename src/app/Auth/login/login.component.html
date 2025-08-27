@@ -1,96 +1,120 @@
-<div class="form-container">
-  <div class="form-card">
-    <div class="form-header">
-      <h2 class="form-title">Login to Interview Tracker</h2>
-    </div>
-
-    @if (showSuccessMessage) {
-    <div class="success-message-container">
-      <p class="success-message">Login successful!</p>
-      <p class="greeting-message">Welcome, {{ loggedInUser }}!</p>
-      <svg
-        class="success-icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-8.82"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
-    </div>
-    } @else {
-    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
-      @if (showErrorMessage) {
-      <div class="error-message-container">
-        <p class="error-message">{{ errorMessage }}</p>
+<div class="login-page-container">
+  <!-- Info Card Section -->
+  <div class="info-card-container">
+    <div class="interview-tracker-info">
+      <div class="overlay">
+        <h1 class="tracker-title">Interview Tracker</h1>
+        <p class="tracker-slogan">
+          Manage your hiring processes.<br />
+          From candidates to completion, all in one place.
+        </p>
       </div>
-      }
-      <div class="form-section">
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label for="username">Username</label>
-            <input
-              id="username"
-              type="text"
-              formControlName="username"
-              placeholder="Enter your username"
-              [class.is-invalid]="
-                loginForm.get('username')?.invalid &&
-                loginForm.get('username')?.touched
-              "
-              [disabled]="isSubmitting"
-            />
-            @if (loginForm.get('username')?.invalid &&
-            loginForm.get('username')?.touched) {
-            <div class="validation-error">
-              @if (loginForm.get('username')?.hasError('required')) {
-              <p>Username is required.</p>
-              }
-            </div>
-            }
-          </div>
-        </div>
+    </div>
+  </div>
 
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label for="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              formControlName="password"
-              placeholder="Enter your password"
-              [class.is-invalid]="
-                loginForm.get('password')?.invalid &&
-                loginForm.get('password')?.touched
-              "
-              [disabled]="isSubmitting"
-            />
-            @if (loginForm.get('password')?.invalid &&
-            loginForm.get('password')?.touched) {
-            <div class="validation-error">
-              @if (loginForm.get('password')?.hasError('required')) {
-              <p>Password is required.</p>
-              }
-            </div>
-            }
-          </div>
-        </div>
+  <!-- Login Form Section -->
+  <div class="form-container">
+    <div class="form-card">
+      <div class="form-header">
+        <h2 class="form-title">Login to Interview Tracker</h2>
       </div>
 
-      <div class="form-actions">
-        <button
-          type="submit"
-          class="btn-primary"
-          [disabled]="loginForm.invalid || isSubmitting"
+      @if (showSuccessMessage) {
+      <div class="success-message-container">
+        <p class="success-message">Login successful!</p>
+        <p class="greeting-message">Welcome, {{ loggedInUser }}!</p>
+        <svg
+          class="success-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          {{ isSubmitting ? "Logging In..." : "Login" }}
-        </button>
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-8.82"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
       </div>
-    </form>
-    }
+      } @else {
+      <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
+        @if (showErrorMessage) {
+        <div class="error-message-container">
+          <p class="error-message">{{ errorMessage }}</p>
+        </div>
+        }
+        <div class="form-section">
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="username">Username</label>
+              <input
+                id="username"
+                type="text"
+                formControlName="username"
+                placeholder="Enter your username"
+                [class.is-invalid]="
+                  loginForm.get('username')?.invalid &&
+                  loginForm.get('username')?.touched
+                "
+                [disabled]="isSubmitting"
+              />
+              @if (loginForm.get('username')?.invalid &&
+              loginForm.get('username')?.touched) {
+              <div class="validation-error">
+                @if (loginForm.get('username')?.hasError('required')) {
+                <p>Username is required.</p>
+                }
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="Enter your password"
+                [class.is-invalid]="
+                  loginForm.get('password')?.invalid &&
+                  loginForm.get('password')?.touched
+                "
+                [disabled]="isSubmitting"
+              />
+              @if (loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched) {
+              <div class="validation-error">
+                @if (loginForm.get('password')?.hasError('required')) {
+                <p>Password is required.</p>
+                }
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn-primary"
+            [disabled]="loginForm.invalid || isSubmitting"
+          >
+            {{ isSubmitting ? "Logging In..." : "Login" }}
+          </button>
+        </div>
+        <div class="signup-link-container">
+          <p>
+            New user?
+            <a href="#" class="signup-link" (click)="onSignUpClicked()"
+              >Sign up</a
+            >
+          </p>
+        </div>
+      </form>
+      }
+    </div>
   </div>
 </div>

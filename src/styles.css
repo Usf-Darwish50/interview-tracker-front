@@ -28,3 +28,7 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
+/* This new class applies the light green background specifically to the login page container */
+.login-page-background {
+  background-color: #e6f4e6;
+}

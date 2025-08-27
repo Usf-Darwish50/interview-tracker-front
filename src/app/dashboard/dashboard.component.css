@@ -27,6 +27,64 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+/*
+ * We've added flexbox to the parent container to center the text.
+ * The background image, border, and shadow properties remain.
+ * This section now includes an overlay for better text readability.
+ */
+.interview-tracker-info {
+  width: 100%;
+  height: 300px;
+  background-image: url("/assets/images/dashboard.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: local;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  /* New styles to center the text content */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden; /* Ensures the overlay stays within the border-radius */
+}
+
+/* This new class adds a semi-transparent overlay to dim the background image */
+.interview-tracker-info .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Change this value to move content up/down */
+  align-items: center; /* Change this value to move content left/right */
+  padding: 0 0px; /* Adjust padding to move content left/right */
+}
+
+/* New styling for the title text */
+.interview-tracker-info .tracker-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff; /* White text for visibility */
+  margin-bottom: 6px;
+  letter-spacing: -0.025em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Subtle shadow for depth */
+}
+
+/* New styling for the slogan text */
+.interview-tracker-info .tracker-slogan {
+  font-size: 22px;
+  font-weight: 500;
+  color: #ffffff; /* Light gray text for contrast */
+  line-height: 1.5;
+  margin: 0;
+}
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -35,7 +93,7 @@
 }
 
 .section-title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
   color: #111827;
   margin: 0;
@@ -67,58 +125,6 @@
   stroke: currentColor;
   stroke-width: 2;
   fill: none;
-}
-
-/* Chart Styling */
-.chart-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
-.donut-chart {
-  width: 200px;
-  height: 200px;
-}
-
-.chart-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.chart-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-}
-
-/* Updated legend colors */
-.legend-color.completed {
-  background: #10b981; /* Green */
-}
-
-.legend-color.in-progress {
-  background: #347ac4; /* Yellow */
-}
-
-.legend-color.not-started {
-  background: #ef4444; /* Red */
 }
 
 /* Process Cards Grid */
@@ -166,14 +172,14 @@
 
 /* Updated header typography */
 .process-card .process-title {
-  font-size: 14px;
+  font-size: 19px;
   font-weight: 600;
   margin: 0 0 4px 0;
   color: #000000; /* Corrected to white */
 }
 
 .process-card .candidate-count {
-  font-size: 14px;
+  font-size: 16px;
   color: #000000; /* Corrected to lighter white */
 }
 

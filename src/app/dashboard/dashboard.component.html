@@ -2,6 +2,7 @@
   <button class="btn-primary small" routerLink="/add-candidate">
     Add Candidate
   </button>
+
   <button class="btn-primary small" (click)="onAddProcessClick()">
     Add Process
   </button>
@@ -18,60 +19,19 @@
 
 <div class="dashboard-content">
   <div class="dashboard-section">
-    <div class="section-card">
-      <h2 class="section-title">Process Distribution</h2>
-      <div class="chart-container">
-        <div class="donut-chart">
-          <svg viewBox="0 0 200 200" class="chart-svg">
-            <circle
-              cx="100"
-              cy="100"
-              r="80"
-              fill="none"
-              stroke="#209865"
-              stroke-width="20"
-              stroke-dasharray="226 504"
-              stroke-dashoffset="0"
-              transform="rotate(-90 100 100)"
-            />
-            <circle
-              cx="100"
-              cy="100"
-              r="80"
-              fill="none"
-              stroke="#2B6CB0"
-              stroke-width="20"
-              stroke-dasharray="176 504"
-              stroke-dashoffset="-226"
-              transform="rotate(-90 100 100)"
-            />
-            <circle
-              cx="100"
-              cy="100"
-              r="80"
-              fill="none"
-              stroke="#E53E3E"
-              stroke-width="20"
-              stroke-dasharray="101 504"
-              stroke-dashoffset="-402"
-              transform="rotate(-90 100 100)"
-            />
-          </svg>
-        </div>
-        <div class="chart-legend">
-          <div class="legend-item">
-            <div class="legend-color completed"></div>
-            <span>Completed ({{ processDistribution.completed }}%)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-color in-progress"></div>
-            <span>In Progress ({{ processDistribution.inProgress }}%)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-color not-started"></div>
-            <span>Not Stared ({{ processDistribution.cancelled }}%)</span>
-          </div>
-        </div>
+    <!-- The content is now inside the interview-tracker-info div -->
+    <div class="interview-tracker-info">
+      <div class="overlay">
+        <h1 class="tracker-title">Interview Tracker</h1>
+        <p class="tracker-slogan">
+          Faster, Smarter, Better Interviews...<br />
+          Interview Track is a platform that simplifies and streamlines your
+          entire interview process.<br />
+          From candidate management to performance tracking, our intuitive
+          interface and powerful features ensure a smooth and efficient
+          experience Say goodbye to manual paperwork and hello to a more
+          organized and data-driven recruitment process.
+        </p>
       </div>
     </div>
   </div>
@@ -79,12 +39,14 @@
   <div class="dashboard-section">
     <div class="section-header">
       <h2 class="section-title">Active Processes</h2>
+
       <div class="section-actions">
         <button class="nav-btn" aria-label="Previous">
           <svg class="icon" viewBox="0 0 24 24">
             <polyline points="15,18 9,12 15,6"></polyline>
           </svg>
         </button>
+
         <button class="nav-btn" aria-label="Next">
           <svg class="icon" viewBox="0 0 24 24">
             <polyline points="9,18 15,12 9,6"></polyline>
@@ -98,22 +60,14 @@
       track process.processId) {
       <div class="process-card">
         <div class="card-header {{ process.status }}"></div>
+
         <div class="card-body">
           <h3 class="process-title">{{ process.title }}</h3>
+
           <span class="candidate-count">
             {{ process.candidateCount }} Candidates
           </span>
-          <!-- <div class="process-status">
-            {{
-              process.status === "NOT_STARTED"
-                ? "Not Started"
-                : process.status === "IN_PROGRESS"
-                ? "In Progress"
-                : process.status === "COMPLETED"
-                ? "Completed"
-                : "N/A"
-            }}
-          </div> -->
+
           <button
             class="view-process-btn"
             [routerLink]="['/process-profile', process.processId]"

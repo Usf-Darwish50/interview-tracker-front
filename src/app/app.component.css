@@ -3,27 +3,10 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* Enhanced background with subtle gradient matching logo colors */
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
-  /* Added subtle pattern overlay */
-  background-image: radial-gradient(
-      circle at 25% 25%,
-      rgba(37, 99, 235, 0.02) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 75% 75%,
-      rgba(34, 197, 94, 0.02) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(239, 68, 68, 0.02) 0%,
-      transparent 50%
-    );
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
-
 .main-content {
   flex: 1;
   margin-top: 25px; /* Space for fixed top navbar */
@@ -31,25 +14,20 @@
   flex-direction: column;
   min-height: calc(100vh - 64px);
 }
-
 .content-wrapper {
   flex: 1;
   padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  /* Added subtle backdrop for content area */
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
+  background: transparent;
+  backdrop-filter: blur(0px); /* Or remove this line entirely */
   border-radius: 16px;
   margin-top: 24px;
   margin-bottom: 24px;
-  /* Enhanced shadow to match navbar styling
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06); */
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none; /* Removed the shadow for a cleaner look */
+  border: none; /* Removed the border for a cleaner look */
 }
-
 /* Responsive */
 @media (max-width: 768px) {
   .content-wrapper {
@@ -59,186 +37,7 @@
   }
 }
 
-/* Global styles for child components */
-:host ::ng-deep {
-  .page-header {
-    margin-bottom: 32px;
-    /* Added subtle border bottom matching navbar style */
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 24px;
-  }
-
-  .page-title {
-    font-size: 28px;
-    font-weight: 700;
-    /* Updated color to match navbar brand text */
-    color: #111827;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.025em;
-    /* Added font family consistency with navbar */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      sans-serif;
-  }
-
-  .page-subtitle {
-    font-size: 16px;
-    /* Updated color to match navbar secondary text */
-    color: #6b7280;
-    margin: 0;
-    font-weight: 500;
-  }
-
-  .card {
-    background: white;
-    border-radius: 12px;
-    /* Enhanced shadow to match navbar depth */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e5e7eb;
-    padding: 24px;
-    margin-bottom: 24px;
-    /* Added subtle backdrop for glass effect */
-    backdrop-filter: blur(8px);
-    /* Added hover effect matching navbar interactions */
-    transition: all 0.2s ease;
-  }
-
-  .card:hover {
-    /* Added hover state matching navbar style */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transform: translateY(-1px);
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    /* Added font family consistency */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      sans-serif;
-  }
-
-  .btn-primary {
-    /* Updated to match navbar active state color */
-    background: #2563eb;
-    color: white;
-    /* Added subtle shadow matching navbar depth */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  }
-
-  .btn-primary:hover {
-    /* Updated hover state to match navbar active hover */
-    background: #1d4ed8;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-  }
-
-  .btn-secondary {
-    /* Updated colors to match navbar hover states */
-    background: #f3f4f6;
-    color: #374151;
-    border: 1px solid #e5e7eb;
-  }
-
-  .btn-secondary:hover {
-    /* Updated hover to match navbar button hover */
-    background: #e5e7eb;
-    color: #111827;
-  }
-
-  /* Added new utility classes matching logo colors */
-  .accent-red {
-    color: #ef4444;
-  }
-
-  .accent-green {
-    color: #22c55e;
-  }
-
-  .accent-blue {
-    color: #2563eb;
-  }
-
-  .bg-accent-red {
-    background-color: #fef2f2;
-    border-left: 4px solid #ef4444;
-  }
-
-  .bg-accent-green {
-    background-color: #f0fdf4;
-    border-left: 4px solid #22c55e;
-  }
-
-  .bg-accent-blue {
-    background-color: #eff6ff;
-    border-left: 4px solid #2563eb;
-  }
-
-  /* Added status indicators matching logo theme */
-  .status-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-
-  .status-active {
-    background: #dcfce7;
-    color: #166534;
-  }
-
-  .status-pending {
-    background: #fef3c7;
-    color: #92400e;
-  }
-
-  .status-inactive {
-    background: #fee2e2;
-    color: #991b1b;
-  }
-}
-
-/* Added custom scrollbar styling to match overall theme */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Added loading animation matching the theme */
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-.loading-shimmer {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-  background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
+/* This new class applies the light green background specifically to the login page container */
+.login-page-background {
+  background-color: #e6f4e6;
 }

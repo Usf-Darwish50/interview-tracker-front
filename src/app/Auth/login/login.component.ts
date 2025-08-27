@@ -97,4 +97,7 @@ export class LoginComponent {
         },
       });
   }
+  onSignUpClicked() {
+    console.log('sign up');
+  }
 }
