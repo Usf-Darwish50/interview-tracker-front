@@ -29,9 +29,6 @@
 .interview-tracker-info {
   width: 100%;
   height: 100%;
-  background-image: url("/assets/images/login.jpeg");
-  background-size: cover;
-  background-position: center;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -41,6 +38,16 @@
   align-items: center;
   text-align: center;
   overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This is the key to maintaining the background-image behavior */
+  z-index: 1; /* Place the image behind the overlay */
 }
 
 .interview-tracker-info .overlay {
@@ -56,6 +63,7 @@
   align-items: center;
   padding: 24px;
   text-align: center;
+  z-index: 2; /* Place the overlay above the image */
 }
 
 .interview-tracker-info .tracker-title {
