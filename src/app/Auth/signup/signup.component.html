@@ -1,0 +1,166 @@
+<div class="login-page-container login-page-background">
+  <!-- Info Card Section -->
+  <div class="info-card-container">
+    <div class="interview-tracker-info">
+      <div class="overlay">
+        <h1 class="tracker-title">Interview Tracker</h1>
+        <p class="tracker-slogan">
+          Manage your hiring processes.<br />
+          From candidates to completion, all in one place.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Form Section -->
+  <div class="form-container">
+    <div class="form-card">
+      <div class="form-header">
+        <h2 class="form-title">Manager Signup</h2>
+      </div>
+
+      @if (showSuccessMessage) {
+      <div class="success-message-container">
+        <p class="success-message">Manager created successfully!</p>
+        <svg
+          class="success-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-8.82"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      } @else {
+      <form [formGroup]="signupForm" class="login-form" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+                id="username"
+                type="text"
+                formControlName="username"
+                placeholder="Enter your username"
+                [class.is-invalid]="
+                  signupForm.get('username')?.invalid &&
+                  signupForm.get('username')?.touched
+                "
+                [disabled]="isSubmitting"
+              />
+              @if (signupForm.get('username')?.invalid &&
+              signupForm.get('username')?.touched) {
+              <div class="validation-error">
+                @if (signupForm.get('username')?.hasError('required')) {
+                <p>Username is required.</p>
+                } @if (signupForm.get('username')?.hasError('minlength')) {
+                <p>Username must be at least 3 characters long.</p>
+                }
+              </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="manager@example.com"
+                [class.is-invalid]="
+                  signupForm.get('email')?.invalid &&
+                  signupForm.get('email')?.touched
+                "
+                [disabled]="isSubmitting"
+              />
+              @if (signupForm.get('email')?.invalid &&
+              signupForm.get('email')?.touched) {
+              <div class="validation-error">
+                @if (signupForm.get('email')?.hasError('required')) {
+                <p>Email is required.</p>
+                } @if (signupForm.get('email')?.hasError('email')) {
+                <p>Please enter a valid email address.</p>
+                }
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="+01200000000"
+                [class.is-invalid]="
+                  signupForm.get('phone')?.invalid &&
+                  signupForm.get('phone')?.touched
+                "
+                [disabled]="isSubmitting"
+              />
+              @if (signupForm.get('phone')?.invalid &&
+              signupForm.get('phone')?.touched) {
+              <div class="validation-error">
+                @if (signupForm.get('phone')?.hasError('required')) {
+                <p>Phone number is required.</p>
+                } @if (signupForm.get('phone')?.hasError('pattern')) {
+                <p>Please enter a valid phone number.</p>
+                }
+              </div>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="Enter your password"
+                [class.is-invalid]="
+                  signupForm.get('password')?.invalid &&
+                  signupForm.get('password')?.touched
+                "
+                [disabled]="isSubmitting"
+              />
+              @if (signupForm.get('password')?.invalid &&
+              signupForm.get('password')?.touched) {
+              <div class="validation-error">
+                @if (signupForm.get('password')?.hasError('required')) {
+                <p>Password is required.</p>
+                } @if (signupForm.get('password')?.hasError('minlength')) {
+                <p>Password must be at least 8 characters long.</p>
+                }
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn-primary"
+            [disabled]="signupForm.invalid || isSubmitting"
+          >
+            {{ isSubmitting ? "Signing Up..." : "Sign Up" }}
+          </button>
+        </div>
+        <div class="signup-link-container">
+          <p>
+            Already have an account?
+            <a class="signup-link" [routerLink]="['/login']">Go to Login</a>
+          </p>
+        </div>
+      </form>
+      }
+    </div>
+  </div>
+</div>

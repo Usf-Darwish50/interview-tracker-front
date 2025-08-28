@@ -22,7 +22,9 @@ export class AppComponent {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         // Check if the current URL is the login page
-        this.isLoginPage = event.urlAfterRedirects.includes('/login');
+        this.isLoginPage =
+          event.urlAfterRedirects.includes('/login') ||
+          event.urlAfterRedirects.includes('/signup');
         this.updateBodyClass();
       });
   }

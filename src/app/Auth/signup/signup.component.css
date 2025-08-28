@@ -1,0 +1,318 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Removed min-height to allow content to dictate height */
+  width: 100%;
+  background-color: #e6f4e6;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+/* ====== Layout (Signup variant: bigger form, smaller info) ====== */
+.login-page-container {
+  display: flex;
+  width: 100%;
+  height: 100%; /* Make the container fill the parent's height */
+  max-width: 1200px;
+  margin: 0;
+}
+
+.info-card-container {
+  flex: 0.8; /* smaller than login */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.form-container {
+  flex: 1.2; /* larger than login */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+/* ====== Info Card ====== */
+.interview-tracker-info {
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/login.jpeg"); /* keep same path as login */
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.interview-tracker-info .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 24px;
+}
+
+.interview-tracker-info .tracker-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: -0.025em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.interview-tracker-info .tracker-slogan {
+  font-size: 22px;
+  font-weight: 400;
+  color: #e0e0e0;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ====== Form Card ====== */
+.form-card {
+  background-color: #f3f4f6;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  width: 100%;
+  max-width: 560px; /* slightly wider than login */
+  overflow: hidden;
+  position: relative;
+}
+
+.form-header {
+  background: #f3f4f6;
+  padding: 30px 40px 10px;
+  border-bottom: 2px solid #acadb1;
+}
+
+.form-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 8px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Use same class as your template */
+.login-form {
+  padding: 40px 40px 32px;
+}
+
+.form-section {
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-group.full-width {
+  flex: 1 1 100%;
+}
+
+.form-group label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.form-group input {
+  padding: 12px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 18px;
+  color: #111827;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.form-group input:focus {
+  border-color: #9ca3af;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-group input:hover:not(:focus) {
+  border-color: #9ca3af;
+}
+
+.form-group input.is-invalid {
+  border-color: #ef4444;
+}
+
+.validation-error {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Actions / Buttons (keeps your .btn-primary) */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 9px;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  background-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transition: none;
+}
+
+/* Success & Error blocks */
+.success-message-container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.success-message {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #10b981;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.success-icon {
+  color: #10b981;
+  width: 48px;
+  height: 48px;
+}
+
+.error-message-container {
+  background-color: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.error-message {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Signup link block (already in your HTML) */
+.signup-link-container {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.signup-link-container a {
+  color: #208e8b;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.signup-link-container a:hover {
+  color: #197a77;
+  text-decoration: underline;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 900px) {
+  .login-page-container {
+    flex-direction: column;
+    height: auto;
+    align-items: flex-start;
+  }
+
+  .info-card-container {
+    padding: 24px;
+  }
+
+  .form-container {
+    padding: 24px;
+    padding-top: 12px;
+    overflow-y: auto;
+  }
+
+  .interview-tracker-info {
+    height: 200px;
+  }
+
+  .form-title {
+    font-size: 24px;
+  }
+
+  .form-header {
+    padding: 24px 24px 10px;
+  }
+
+  .login-form {
+    padding: 24px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 12px;
+    padding-top: 8px;
+  }
+  .form-header {
+    padding: 20px 20px 16px;
+  }
+  .login-form {
+    padding: 20px;
+  }
+  .form-title {
+    font-size: 22px;
+  }
+}

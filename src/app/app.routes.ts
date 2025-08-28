@@ -8,10 +8,12 @@ import { ProcessProfileComponent } from './Process/process-profile/process-profi
 import { InterviewersListComponent } from './Interviewer/interviewers-list/interviewers-list.component';
 import { AddInterviewerComponent } from './Interviewer/add-interviewer/add-interviewer.component';
 import { LoginComponent } from './Auth/login/login.component';
+import { SignupComponent } from './Auth/signup/signup.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'candidates', component: CandidatesComponent },
   { path: 'processes', component: ProcessesComponent },

@@ -63,11 +63,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
    */
   checkRoute(): void {
     // Hide the navbar on the login page
-    this.showNavbar = this.router.url !== '/login';
-  }
-
-  onSearchClick(): void {
-    console.log('Search clicked');
+    this.showNavbar = !(
+      this.router.url === '/login' || this.router.url === '/signup'
+    );
   }
 
   toggleUserMenu(): void {

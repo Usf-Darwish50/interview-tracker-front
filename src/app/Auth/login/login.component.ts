@@ -91,6 +91,6 @@ export class LoginComponent {
       });
   }
   onSignUpClicked() {
-    console.log('sign up');
+    this.router.navigate(['/signup']);
   }
 }
