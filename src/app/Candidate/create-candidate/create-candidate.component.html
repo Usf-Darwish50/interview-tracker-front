@@ -51,7 +51,10 @@
               @if (candidateForm.get('fullName')?.hasError('required')) {
               <p>Full Name is required.</p>
               } @if (candidateForm.get('fullName')?.hasError('pattern')) {
-              <p>Full Name can only contain letters and spaces.</p>
+              <p>
+                Full Name must be at least two names and only contain letters,
+                spaces.
+              </p>
               }
             </div>
             }
@@ -107,7 +110,10 @@
               @if (candidateForm.get('email')?.hasError('required')) {
               <p>Email is required.</p>
               } @if (candidateForm.get('email')?.hasError('email')) {
-              <p>Please enter a valid email address.</p>
+              <p>
+                Please enter a valid email address, like
+                candidate&#64;gmail.com.
+              </p>
               }
             </div>
             }

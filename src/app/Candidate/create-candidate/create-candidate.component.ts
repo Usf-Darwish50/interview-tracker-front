@@ -22,7 +22,7 @@ export class CreateCandidateComponent {
   showSuccessMessage: boolean = false;
   isSubmitting: boolean = false;
 
-  phonePattern = /^[+]{0,1}[0-9\s-()]{7,20}$/;
+  phonePattern = /^01[0125][0-9]{8}$/;
   urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
 
   constructor(
@@ -34,11 +34,18 @@ export class CreateCandidateComponent {
     this.candidateForm = this.formBuilder.group({
       fullName: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)],
+        [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)+$/)],
       ],
       phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[\w.-]+@(gmail|yahoo|outlook|ntgclarity)\.com$/),
+          Validators.email,
+        ],
+      ],
       resumeUrl: [
         '',
         [Validators.required, Validators.pattern(this.urlPattern)],

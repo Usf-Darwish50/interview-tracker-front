@@ -61,8 +61,11 @@
               <div class="validation-error">
                 @if (signupForm.get('username')?.hasError('required')) {
                 <p>Username is required.</p>
-                } @if (signupForm.get('username')?.hasError('minlength')) {
-                <p>Username must be at least 3 characters long.</p>
+                } @if (!signupForm.get('username')?.hasError('required')) {
+                <p>
+                  Username must be at least 5 chars long with at least 1 letter
+                  and 1 number.
+                </p>
                 }
               </div>
               }
@@ -74,7 +77,7 @@
                 id="email"
                 type="email"
                 formControlName="email"
-                placeholder="manager@example.com"
+                placeholder="manager@gmail.com"
                 [class.is-invalid]="
                   signupForm.get('email')?.invalid &&
                   signupForm.get('email')?.touched
@@ -87,7 +90,10 @@
                 @if (signupForm.get('email')?.hasError('required')) {
                 <p>Email is required.</p>
                 } @if (signupForm.get('email')?.hasError('email')) {
-                <p>Please enter a valid email address.</p>
+                <p>
+                  Please enter a valid email address, like
+                  manager&#64;gmail.com.
+                </p>
                 }
               </div>
               }
@@ -101,7 +107,7 @@
                 id="phone"
                 type="tel"
                 formControlName="phone"
-                placeholder="+01200000000"
+                placeholder="01200000000"
                 [class.is-invalid]="
                   signupForm.get('phone')?.invalid &&
                   signupForm.get('phone')?.touched
@@ -114,7 +120,10 @@
                 @if (signupForm.get('phone')?.hasError('required')) {
                 <p>Phone number is required.</p>
                 } @if (signupForm.get('phone')?.hasError('pattern')) {
-                <p>Please enter a valid phone number.</p>
+                <p>
+                  Phone number must be exactly 11 digits and start with
+                  "01[0,1,2,5]".
+                </p>
                 }
               </div>
               }
@@ -138,8 +147,11 @@
               <div class="validation-error">
                 @if (signupForm.get('password')?.hasError('required')) {
                 <p>Password is required.</p>
-                } @if (signupForm.get('password')?.hasError('minlength')) {
-                <p>Password must be at least 8 characters long.</p>
+                } @if (!signupForm.get('password')?.hasError('required')) {
+                <p>
+                  Password must be at least 8 chars long with at least 1 letter
+                  and 1 number.
+                </p>
                 }
               </div>
               }

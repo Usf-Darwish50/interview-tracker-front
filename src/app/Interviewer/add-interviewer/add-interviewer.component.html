@@ -48,7 +48,10 @@
               @if (interviewerForm.get('username')?.hasError('required')) {
               <p>Username is required.</p>
               } @if (interviewerForm.get('username')?.hasError('minlength')) {
-              <p>Username must be at least 3 characters long.</p>
+              <p>
+                Username must be at least 5 chars long with at least 1 letter
+                and 1 number.
+              </p>
               }
             </div>
             }
@@ -73,7 +76,10 @@
               @if (interviewerForm.get('email')?.hasError('required')) {
               <p>Email is required.</p>
               } @if (interviewerForm.get('email')?.hasError('email')) {
-              <p>Please enter a valid email address.</p>
+              <p>
+                Please enter a valid email address, like
+                interviewer&#64;gmail.com.
+              </p>
               }
             </div>
             }
@@ -100,7 +106,10 @@
               @if (interviewerForm.get('phone')?.hasError('required')) {
               <p>Phone number is required.</p>
               } @if (interviewerForm.get('phone')?.hasError('pattern')) {
-              <p>Please enter a valid phone number.</p>
+              <p>
+                Phone number must be exactly 11 digits and start with
+                "01[0,1,2,5]".
+              </p>
               }
             </div>
             }
@@ -152,7 +161,10 @@
               @if (interviewerForm.get('password')?.hasError('required')) {
               <p>Password is required.</p>
               } @if (interviewerForm.get('password')?.hasError('minlength')) {
-              <p>Password must be at least 6 characters long.</p>
+              <p>
+                Password must be at least 8 chars long with at least 1 letter
+                and 1 number.
+              </p>
               }
             </div>
             }

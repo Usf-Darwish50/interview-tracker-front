@@ -35,16 +35,35 @@ export class SignupComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
+          // Corrected to minLength 5 as requested
+          Validators.minLength(5),
+          // Pattern validator correctly checks for at least one letter and one number
+          Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,}$'),
         ],
       ],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|ntgclarity)\.com$/
+          ),
+
+          Validators.email,
+        ],
+      ],
       phone: [
         '',
-        [Validators.required, Validators.pattern(/^[+]{0,1}[0-9\s-()]{7,20}$/)],
+        [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
       ],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,}$'),
+        ],
+      ],
     });
   }
 
